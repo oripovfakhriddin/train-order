@@ -11,43 +11,29 @@ import InboxPage from "./pages/admin/inbox";
 import SchedulePage from "./pages/admin/schedule";
 import SearchPage from "./pages/admin/search";
 import SettingPage from "./pages/admin/setting";
-
-// function App() {
-//   return;
-//   <Fragment></Fragment>;
-// }
-
-// export default App;
+import UserLayout from "./components/layouts/user";
+import HomePage from "./pages/user/home";
+import LoginPage from "./pages/user/login";
+import RegisterPage from "./pages/user/register";
+import AccountPage from "./pages/user/account";
+import ContactPage from "./pages/user/contact";
+import AboutPage from "./pages/user/about";
+import ServicePage from "./pages/user/service";
 
 const App = () => {
   return (
     <Fragment>
       <BrowserRouter>
         <Routes>
-          {/* <Route path="/" element={<FrontLayout />}>
+          <Route path="/" element={<UserLayout />}>
             <Route index element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/account" element={<AccountPage />} />
-          </Route> */}
-
-          {/* <Route
-            path="/"
-            element={
-              isAuthenticated && user?.role === "admin" ? (
-                <AdminLayout />
-              ) : (
-                <Navigate to="/" />
-              )
-            }
-          >
-            <Route path="dashboard" element={<DashboardPage />} />
-            <Route path="skills" element={<SkillsPage />} />
-            <Route path="users" element={<UsersPage />} />
-            <Route path="experiences" element={<ExperiencesPage />} />
-            <Route path="education" element={<EducationPage />} />
-            <Route path="portfolios" element={<PortfoliosPage />} />
-          </Route> */}
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/service" element={<ServicePage />} />
+          </Route>
 
           <Route path="/admin" element={<AdminLayout />}>
             <Route path="dashboard" element={<DashboardPage />} />

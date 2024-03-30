@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 
 import Logo from "../../../assets/logo.png";
@@ -11,10 +11,12 @@ import Calendar from "../../../assets/Calendar.png";
 import Search from "../../../assets/Search.png";
 import Folder from "../../../assets/Folder.png";
 import Setting from "../../../assets/Setting.png";
+import useScreenSize from "../../../hooks/useScreen";
 
 const AdminLayout = () => {
   const [open, setOpen] = useState(true);
   const location = useLocation();
+  const screen = useScreenSize();
   const Menus = [
     { title: "Dashboard", src: Chart_fill, to: "dashboard" },
     { title: "Inbox", src: Chat, to: "inbox" },
@@ -26,7 +28,9 @@ const AdminLayout = () => {
     { title: "Setting", src: Setting, to: "setting" },
   ];
 
-  console.log(location.pathname.split("/"));
+  useEffect(() => {
+    screen <= 672 ? setOpen(false) : setOpen(true);
+  }, [screen]);
 
   return (
     <div className="flex">
