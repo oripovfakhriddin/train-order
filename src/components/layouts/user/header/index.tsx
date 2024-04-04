@@ -1,16 +1,16 @@
-import { Menu, X } from "lucide-react";
-import { NavLink, useLocation } from "react-router-dom";
 import { useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
+
+import { Menu, X } from "lucide-react";
 
 const Header = () => {
   const location = useLocation();
 
   const Links = [
-    { name: "Home", link: "/" },
-    { name: "Service", link: "/service" },
-    { name: "About", link: "/about" },
-    { name: "Contact", link: "/contact" },
-    { name: "Account", link: "/account" },
+    { name: "Bosh sahifa", link: "/" },
+    { name: "Poyezd", link: "/train" },
+    { name: "Hisob", link: "/account" },
+    { name: "Login", link: "/login" },
   ];
 
   const [open, setOpen] = useState<boolean>(false);
@@ -41,6 +41,7 @@ const Header = () => {
             <li key={link.name} className="md:ml-6 text-xl md:my-0 my-7">
               <NavLink
                 to={link.link}
+                onClick={() => setOpen(false)}
                 className={` hover:text-gray-100 ${
                   location.pathname === link.link
                     ? "text-gray-100"
@@ -51,7 +52,6 @@ const Header = () => {
               </NavLink>
             </li>
           ))}
-          <button>Get Started</button>
         </ul>
       </div>
     </div>
