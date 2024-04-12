@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 
 import { Menu, X } from "lucide-react";
+
+import VagonLogo from "../../../../assets/wagon_logo.png";
 
 const Header = () => {
   const location = useLocation();
@@ -22,7 +24,10 @@ const Header = () => {
       text-gray-300"
         >
           <span className="text-3xl text-indigo-600 mr-1 pt-2"></span>
-          Order-train
+          <Link to="/" className="flex gap-2 items-center">
+            <img className="w-10" src={VagonLogo} alt="Train image" />
+            <span className="text-gray-300">Vagron buyurtmasi</span>
+          </Link>
         </div>
 
         <div
