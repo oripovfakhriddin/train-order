@@ -34,7 +34,7 @@ const Header = () => {
           onClick={() => setOpen(!open)}
           className="text-3xl absolute right-8 top-6 cursor-pointer md:hidden"
         >
-          {!open ? <Menu /> : <X />}
+          {open ? <X /> : <Menu />}
         </div>
 
         <ul

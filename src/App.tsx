@@ -22,10 +22,13 @@ const App = () => {
     <Fragment>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<UserLayout />}>
-            <Route index element={<HomePage />} />
+          <Route>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+          </Route>
+          <Route path="/" element={<UserLayout />}>
+            <Route index element={<HomePage />} />
+
             <Route path="/account" element={<AccountPage />} />
             <Route path="/train" element={<TrainPage />} />
           </Route>
