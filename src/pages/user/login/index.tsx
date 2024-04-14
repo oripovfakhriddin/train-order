@@ -8,7 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import LogoWagon from "../../../assets/wagon_logo.png";
 import loginSchema from "../../../schema/login";
-import FormValues from "../../../types/login";
+import LoginFormValues from "../../../types/login";
 
 const LoginPage = () => {
   const [openPassword, setOpenPassword] = useState<boolean>(false);
@@ -17,11 +17,11 @@ const LoginPage = () => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<FormValues>({
+  } = useForm<LoginFormValues>({
     resolver: yupResolver(loginSchema),
   });
 
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+  const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     console.log(data);
   };
 
