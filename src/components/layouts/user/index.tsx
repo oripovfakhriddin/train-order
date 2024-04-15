@@ -7,10 +7,10 @@ import Header from "./header";
 const UserLayout = () => {
   return (
     <Fragment>
-      <header className="absolute z-[1]">
+      <header className="top-0 fixed z-[1] h-[72px] w-full  bg-dark-purple ">
         <Header />
       </header>
-      <main className="mt-[66px]">
+      <main className="relative">
         <Outlet />
       </main>
       <footer>

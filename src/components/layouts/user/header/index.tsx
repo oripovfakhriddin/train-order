@@ -17,10 +17,10 @@ const Header = () => {
 
   const [open, setOpen] = useState<boolean>(false);
   return (
-    <div className="shadow-md w-full fixed top-0 left-0">
-      <div className="md:flex items-center justify-between bg-dark-purple py-4 md:px-10 px-7">
+    <div className="shadow-md w-full">
+      <div className="md:flex items-center justify-between relative container mx-auto  py-4 ">
         <div
-          className="font-bold text-2xl cursor-pointer flex items-center font-[Poppins] 
+          className="font-bold text-2xl cursor-pointer flex items-center  font-[Poppins] 
       text-gray-300"
         >
           <span className="text-3xl text-indigo-600 mr-1 pt-2"></span>
