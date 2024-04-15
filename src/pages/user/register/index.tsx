@@ -90,6 +90,7 @@ const RegisterPage = () => {
                   Phone number
                 </label>
                 <input
+                  defaultValue="+9989"
                   placeholder="Phone number entry"
                   id="number"
                   {...register("number")}
