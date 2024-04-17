@@ -1,25 +1,46 @@
-import { Fragment, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { yupResolver } from "@hookform/resolvers/yup";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 import LogoWagon from "../../../assets/wagon_logo.png";
+import { TOKEN, USER } from "../../../constants";
+import { AuthContext } from "../../../context/auth";
 import registerSchema from "../../../schema/register";
 import RegisterFormValues from "../../../types/register";
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
+  const { setIsAuthenticated, setUser } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
   const [openPassword, setOpenPassword] = useState(false);
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<RegisterFormValues>({ resolver: yupResolver(registerSchema) });
 
-  const onSubmit: SubmitHandler<RegisterFormValues> = async (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<RegisterFormValues> = async (values) => {
+    try {
+      setLoading(true);
+      const { data } = await axios.post("auth/sign-up", values);
+      console.log(data);
+      Cookies.set(TOKEN, data.token);
+      localStorage.setItem(USER, JSON.stringify(values));
+      setIsAuthenticated(true);
+      setUser(data);
+      navigate("/");
+    } catch (err) {
+      toast.error("Error");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -168,7 +189,7 @@ const RegisterPage = () => {
                 type="submit"
                 className="px-4 py-2 transition-all duration-500 bg-[#1D2D5B] text-white rounded hover:bg-[#303c60]"
               >
-                {isSubmitting ? "Kutilmoqda" : "Kirish"}
+                {loading ? "Kutilmoqda" : "Kirish"}
               </button>
             </form>
             <div className="flex mt-4 items-center justify-center gap-3">

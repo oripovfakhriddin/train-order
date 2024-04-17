@@ -3,17 +3,18 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 
 import { yupResolver } from "@hookform/resolvers/yup";
+import axios from "axios";
 import Cookies from "js-cookie";
 
 import LogoWagon from "../../../assets/wagon_logo.png";
-import { TOKEN, USER } from "../../../constants";
+import { ENDPOINT, TOKEN, USER } from "../../../constants";
 import { AuthContext } from "../../../context/auth";
 import loginSchema from "../../../schema/login";
 import request from "../../../server/request";
 import LoginFormValues from "../../../types/login";
+import User from "../../../types/user";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -29,21 +30,26 @@ const LoginPage = () => {
     resolver: yupResolver(loginSchema),
   });
 
+  interface LoginDataTypes {
+    data: {
+      accessToken: string;
+      refreshToken: string;
+      user: User;
+    };
+  }
+
   const onSubmit: SubmitHandler<LoginFormValues> = async (values) => {
     try {
       setLoading(true);
-      // const { data }: AxiosResponse<{ token: string }> = await axios.post(
-      //   "https://reqres.in/api/login",
-      //   values
-      // );
-      const { data } = await request.post("sign-in", values);
-      Cookies.set(TOKEN, data.token);
-      localStorage.setItem(USER, JSON.stringify(values));
+      const {
+        data: { data: loginData },
+      } = await axios.post<LoginDataTypes>(`${ENDPOINT}auth/sign-in`, values);
+      request.defaults.headers.Authorization = `Bearer ${loginData?.accessToken}`;
+      Cookies.set(TOKEN, loginData.accessToken);
+      localStorage.setItem(USER, JSON.stringify(loginData.user));
       setIsAuthenticated(true);
-      setUser(data);
+      setUser(loginData.user);
       navigate("/");
-    } catch (err) {
-      toast.error("Error");
     } finally {
       setLoading(false);
     }
