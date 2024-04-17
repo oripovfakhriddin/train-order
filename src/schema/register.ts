@@ -17,7 +17,6 @@ const registerSchema = yup.object().shape({
     .required("Satrni to'ldirish shart")
     .matches(numberRegExp, "Telefon raqam mavjud emas"),
   gender: yup.string().required("Satrni to'ldirish shart"),
-  username: yup.string().required("Satrni to'ldirish shart"),
   password: yup
     .string()
     .min(4, "Satr kamida 4 ta belgidan iborat boʻlishi kerak"),

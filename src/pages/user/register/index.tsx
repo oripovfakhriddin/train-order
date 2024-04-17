@@ -108,28 +108,6 @@ const RegisterPage = () => {
               <div className="mb-4">
                 <label
                   className="text-[12px] inline-block mb-[6px]"
-                  htmlFor="username"
-                >
-                  Username
-                </label>
-                <input
-                  placeholder="Username entry"
-                  id="username"
-                  {...register("username")}
-                  className="w-full border-solid px-[12px] leading-[1.42857143] text-[14px] py-[10px]  border-[#ccc] 
-                  rounded border-[1px] outline-1 outline-[#b7cff9]"
-                  type="text"
-                />
-                {errors?.username && (
-                  <p className="text-red-500 text-[14px]">
-                    {errors.username.message}
-                  </p>
-                )}
-              </div>
-
-              <div className="mb-4">
-                <label
-                  className="text-[12px] inline-block mb-[6px]"
                   htmlFor="password"
                 >
                   Password
@@ -181,15 +159,10 @@ const RegisterPage = () => {
                   dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
                    dark:focus:border-blue-500"
                 >
-                  <option value="other">Other</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
+                  <option value="OTHER">Other</option>
+                  <option value="MALE">Male</option>
+                  <option value="FEMALE">Female</option>
                 </select>
-                {errors?.username && (
-                  <p className="text-red-500 text-[14px]">
-                    {errors.username.message}
-                  </p>
-                )}
               </div>
               <button
                 type="submit"

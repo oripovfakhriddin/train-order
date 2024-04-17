@@ -1,8 +1,10 @@
+import { useContext } from "react";
 import { Fragment } from "react/jsx-runtime";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import AdminLayout from "./components/layouts/admin";
 import UserLayout from "./components/layouts/user";
+import { AuthContext } from "./context/auth";
 import AccountsPage from "./pages/admin/accounts";
 import AnalyticsPage from "./pages/admin/analytics";
 import DashboardPage from "./pages/admin/dashboard";
@@ -18,6 +20,8 @@ import RegisterPage from "./pages/user/register";
 import TrainPage from "./pages/user/train";
 
 const App = () => {
+  const { isAuthenticated } = useContext(AuthContext);
+
   return (
     <Fragment>
       <BrowserRouter>
@@ -33,7 +37,12 @@ const App = () => {
             <Route path="/train" element={<TrainPage />} />
           </Route>
 
-          <Route path="/admin" element={<AdminLayout />}>
+          <Route
+            path="/admin"
+            element={
+              isAuthenticated ? <AdminLayout /> : <Navigate to="/login" />
+            }
+          >
             <Route path="dashboard" element={<DashboardPage />} />
             <Route path="accounts" element={<AccountsPage />} />
             <Route path="analytics" element={<AnalyticsPage />} />

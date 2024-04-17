@@ -1,28 +1,52 @@
-import { Fragment, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { yupResolver } from "@hookform/resolvers/yup";
+import Cookies from "js-cookie";
 
 import LogoWagon from "../../../assets/wagon_logo.png";
+import { TOKEN, USER } from "../../../constants";
+import { AuthContext } from "../../../context/auth";
 import loginSchema from "../../../schema/login";
+import request from "../../../server/request";
 import LoginFormValues from "../../../types/login";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+  const { setIsAuthenticated, setUser } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
   const [openPassword, setOpenPassword] = useState<boolean>(false);
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<LoginFormValues>({
     resolver: yupResolver(loginSchema),
   });
 
-  const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<LoginFormValues> = async (values) => {
+    try {
+      setLoading(true);
+      // const { data }: AxiosResponse<{ token: string }> = await axios.post(
+      //   "https://reqres.in/api/login",
+      //   values
+      // );
+      const { data } = await request.post("sign-in", values);
+      Cookies.set(TOKEN, data.token);
+      localStorage.setItem(USER, JSON.stringify(values));
+      setIsAuthenticated(true);
+      setUser(data);
+      navigate("/");
+    } catch (err) {
+      toast.error("Error");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -45,21 +69,21 @@ const LoginPage = () => {
               <div className="mb-4">
                 <label
                   className="text-[12px] inline-block mb-[6px]"
-                  htmlFor="username"
+                  htmlFor="email"
                 >
-                  Username
+                  Email
                 </label>
                 <input
-                  placeholder="Username entry"
-                  id="username"
-                  {...register("username")}
+                  placeholder="Emain entry"
+                  id="email"
+                  {...register("email")}
                   className="w-full border-solid px-[12px] leading-[1.42857143] text-[14px] py-[10px]  border-[#ccc] 
                   rounded border-[1px] outline-1 outline-[#b7cff9]"
                   type="text"
                 />
-                {errors?.username && (
+                {errors?.email && (
                   <p className="text-red-500 text-[14px]">
-                    {errors.username.message}
+                    {errors.email.message}
                   </p>
                 )}
               </div>
@@ -107,7 +131,7 @@ const LoginPage = () => {
                 type="submit"
                 className="px-4 py-2 transition-all duration-500 bg-[#1D2D5B] text-white rounded hover:bg-[#303c60]"
               >
-                {isSubmitting ? "Kutilmoqda" : "Kirish"}
+                {loading ? "Kutilmoqda" : "Kirish"}
               </button>
             </form>
             <div className="flex mt-4 items-center justify-center gap-3">
