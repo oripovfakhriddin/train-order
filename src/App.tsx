@@ -20,7 +20,7 @@ import RegisterPage from "./pages/user/register";
 import TrainPage from "./pages/user/train";
 
 const App = () => {
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated, user } = useContext(AuthContext);
 
   return (
     <Fragment>
@@ -40,7 +40,11 @@ const App = () => {
           <Route
             path="/admin"
             element={
-              isAuthenticated ? <AdminLayout /> : <Navigate to="/login" />
+              isAuthenticated && user?.role === "ADMIN" ? (
+                <AdminLayout />
+              ) : (
+                <Navigate to="/login" />
+              )
             }
           >
             <Route path="dashboard" element={<DashboardPage />} />

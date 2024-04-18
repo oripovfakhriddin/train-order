@@ -49,7 +49,11 @@ const LoginPage = () => {
       localStorage.setItem(USER, JSON.stringify(loginData.user));
       setIsAuthenticated(true);
       setUser(loginData.user);
-      navigate("/");
+      if (loginData.user.role === "ADMIN") {
+        navigate("/admin/dashboard");
+      } else {
+        navigate("/");
+      }
     } finally {
       setLoading(false);
     }

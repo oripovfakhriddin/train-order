@@ -37,7 +37,7 @@ const AdminLayout = () => {
       <div
         className={` ${
           open ? "w-72" : "w-20 "
-        } bg-dark-purple h-screen p-5  pt-8 relative duration-300`}
+        } bg-dark-purple p-5 fixed h-full pt-8 duration-300`}
       >
         <img
           src={Control}
@@ -84,7 +84,9 @@ const AdminLayout = () => {
           ))}
         </ul>
       </div>
-      <div className="h-screen flex-1 p-7">
+      <div
+        className={` ${open ? "ml-[288px]" : "ml-[80px]"} h-screen  flex-1 p-3`}
+      >
         <Outlet />
       </div>
     </div>
