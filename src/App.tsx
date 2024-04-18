@@ -16,6 +16,7 @@ import SettingPage from "./pages/admin/setting";
 import AccountPage from "./pages/user/account";
 import HomePage from "./pages/user/home";
 import LoginPage from "./pages/user/login";
+import UserOrderPage from "./pages/user/order";
 import RegisterPage from "./pages/user/register";
 import TrainPage from "./pages/user/train";
 
@@ -33,7 +34,18 @@ const App = () => {
           <Route path="/" element={<UserLayout />}>
             <Route index element={<HomePage />} />
 
-            <Route path="/account" element={<AccountPage />} />
+            <Route
+              path="/order"
+              element={
+                isAuthenticated ? <UserOrderPage /> : <Navigate to={"/login"} />
+              }
+            />
+            <Route
+              path="/account"
+              element={
+                isAuthenticated ? <AccountPage /> : <Navigate to={"/login"} />
+              }
+            />
             <Route path="/train" element={<TrainPage />} />
           </Route>
 
