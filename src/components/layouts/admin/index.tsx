@@ -14,7 +14,7 @@ import Logo from "../../../assets/logo.png";
 import Search from "../../../assets/Search.png";
 import Setting from "../../../assets/Setting.png";
 import User from "../../../assets/User.png";
-import { TOKEN, USER } from "../../../constants";
+import { TOKEN, USER, USER_ID } from "../../../constants";
 import { AuthContext } from "../../../context/auth";
 import useScreenSize from "../../../hooks/useScreen";
 
@@ -48,6 +48,7 @@ const AdminLayout = () => {
   const logOutFunction = () => {
     localStorage.removeItem(USER);
     Cookies.remove(TOKEN);
+    Cookies.remove(USER_ID);
     setIsAuthenticated(false);
     navigate("/");
   };

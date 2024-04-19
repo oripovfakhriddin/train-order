@@ -1,4 +1,33 @@
-const TrainPage = () => {
+import { useEffect } from "react";
+
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { getUsers } from "../../../redux/slices/user";
+import { getWagons } from "../../../redux/slices/wagon";
+
+const UserWagonPage = () => {
+  const { wagons, loading, total } = useAppSelector((state) => state.wagon);
+  const {
+    users,
+    loading: uLoading,
+    total: uTotal,
+  } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+
+  // const [callback, setCallback] = useState(false);
+
+  useEffect(() => {
+    dispatch(getWagons());
+    dispatch(getUsers());
+  }, [dispatch]);
+
+  // const refetch = () => {
+  //   setCallback(!callback);
+  // };
+
+  console.log(wagons, loading, total);
+  console.log("User");
+  console.log(users, uLoading, uTotal);
+
   return (
     <div className="text-red-400">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius molestias
@@ -111,4 +140,4 @@ const TrainPage = () => {
   );
 };
 
-export default TrainPage;
+export default UserWagonPage;

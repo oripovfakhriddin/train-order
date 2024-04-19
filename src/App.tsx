@@ -18,7 +18,7 @@ import HomePage from "./pages/user/home";
 import LoginPage from "./pages/user/login";
 import UserOrderPage from "./pages/user/order";
 import RegisterPage from "./pages/user/register";
-import TrainPage from "./pages/user/train";
+import UserWagonPage from "./pages/user/wagon";
 
 const App = () => {
   const { isAuthenticated, user } = useContext(AuthContext);
@@ -46,7 +46,7 @@ const App = () => {
                 isAuthenticated ? <AccountPage /> : <Navigate to={"/login"} />
               }
             />
-            <Route path="/train" element={<TrainPage />} />
+            <Route path="/wagon" element={<UserWagonPage />} />
           </Route>
 
           <Route

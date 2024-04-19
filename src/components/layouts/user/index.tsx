@@ -13,7 +13,7 @@ const UserLayout = () => {
       <main className="relative top-[72px]">
         <Outlet />
       </main>
-      <footer>
+      <footer className="relative top-[72px]">
         <Footer />
       </footer>
     </Fragment>

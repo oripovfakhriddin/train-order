@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 import { Menu, X } from "lucide-react";
 
 import VagonLogo from "../../../../assets/wagon_logo.png";
-import { TOKEN, USER } from "../../../../constants";
+import { TOKEN, USER, USER_ID } from "../../../../constants";
 import { AuthContext } from "../../../../context/auth";
 
 const Header = () => {
@@ -21,6 +21,7 @@ const Header = () => {
 
   const logOutFunction = () => {
     Cookies.remove(TOKEN);
+    Cookies.remove(USER_ID);
     localStorage.removeItem(USER);
     setIsAuthenticated(false);
     navigate("/");
@@ -30,13 +31,13 @@ const Header = () => {
   const Links = isAuthenticated
     ? [
         { name: "Bosh sahifa", link: "/" },
-        { name: "Poyezd", link: "/train" },
+        { name: "Vagon", link: "/wagon" },
         { name: "Buyurtmalar", link: "/order" },
         { name: "Hisob", link: "/account" },
       ]
     : [
         { name: "Bosh sahifa", link: "/" },
-        { name: "Poyezd", link: "/train" },
+        { name: "Vagon", link: "/wagon" },
         { name: "Kirish", link: "/login" },
         { name: "Ro'yhatdan o'tish", link: "/register" },
       ];

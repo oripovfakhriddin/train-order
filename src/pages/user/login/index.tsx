@@ -9,7 +9,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 import LogoWagon from "../../../assets/wagon_logo.png";
-import { ENDPOINT, TOKEN, USER } from "../../../constants";
+import { ENDPOINT, TOKEN, USER, USER_ID } from "../../../constants";
 import { AuthContext } from "../../../context/auth";
 import loginSchema from "../../../schema/login";
 import request from "../../../server/request";
@@ -45,6 +45,7 @@ const LoginPage = () => {
         data: { data: loginData },
       } = await axios.post<LoginDataTypes>(`${ENDPOINT}auth/sign-in`, values);
       request.defaults.headers.Authorization = `Bearer ${loginData?.accessToken}`;
+      Cookies.set(USER_ID, loginData.user.id);
       Cookies.set(TOKEN, loginData.accessToken);
       localStorage.setItem(USER, JSON.stringify(loginData.user));
       setIsAuthenticated(true);
