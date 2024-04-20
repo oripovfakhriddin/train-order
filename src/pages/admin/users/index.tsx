@@ -67,40 +67,40 @@ const AdminUsersPage = () => {
     setIsDeleteModalOpen(false);
   };
 
-  const deleteWagon = () => {
-    console.log(userId);
-    setIsDeleteModalOpen(false);
+  const deleteUser = async () => {
+    const { data } = await request.delete(`user/delete`, {
+      params: { id: userId },
+    });
+    if (data.status === "SUCCESS") {
+      toast.success(data.data);
+      closeDeleteModal();
+      refetch();
+    }
   };
 
   const editUser = async (id: string) => {
-    const data = {
-      fullName: "Edited",
-      email: "adminedit@gmail.com",
-      number: "+998906941566",
-      password: "12345",
-      gender: "FEMALE",
-    };
-
     setSelected(id);
 
-    // const { data } = await request.get(`user/${id}/get-by-id`);
+    const { data } = await request.get("user/get-by-id", {
+      params: { id },
+    });
 
-    setValue("number", data.number, {
+    setValue("number", data.data.number, {
       shouldValidate: true,
       shouldDirty: true,
       shouldTouch: true,
     });
-    setValue("email", data.email, {
+    setValue("email", data.data.email, {
       shouldValidate: true,
       shouldDirty: true,
       shouldTouch: true,
     });
-    setValue("gender", data.gender, {
+    setValue("gender", data.data.gender, {
       shouldValidate: true,
       shouldDirty: true,
       shouldTouch: true,
     });
-    setValue("fullName", data.fullName, {
+    setValue("fullName", data.data.fullName, {
       shouldValidate: true,
       shouldDirty: true,
       shouldTouch: true,
@@ -111,21 +111,17 @@ const AdminUsersPage = () => {
       shouldTouch: true,
     });
     setIsEditModalOpen(true);
-    console.log(data);
   };
 
   const onSubmit: SubmitHandler<RegisterFormValues> = async (values) => {
     if (selected === null) {
-      const { data } = await axios.post(`${ENDPOINT}auth/sign-up`, values);
+      await axios.post(`${ENDPOINT}auth/sign-up`, values);
       toast.success("Foydalanuvchi muvaffaqiyatli qo'shildi!");
-      console.log("add data", data);
     } else {
-      const { data } = await request.put(
-        `user/${selected}/update-profile`,
-        values
-      );
+      const { data } = await request.put(`user/update-profile`, values, {
+        params: { id: selected },
+      });
       toast.success(data.message);
-      console.log("edit data:", data);
     }
     setIsEditModalOpen(false);
     refetch();
@@ -261,6 +257,7 @@ const AdminUsersPage = () => {
           </div>
         </section>
       )}
+      
       {/* START delete user Modal  */}
       <div
         className={`${
@@ -312,7 +309,7 @@ const AdminUsersPage = () => {
               </h3>
               <button
                 type="button"
-                onClick={deleteWagon}
+                onClick={deleteUser}
                 className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
               >
                 Tasdiqlash

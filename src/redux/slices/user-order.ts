@@ -20,9 +20,11 @@ const initialState: initialStateTypes = {
 export const getUsersOrders = createAsyncThunk(
   "users-orders/fetching",
   async () => {
-    const { data } = await request.get(
-      `/user/${Cookies.get(USER_ID)}/get-my-orders`
-    );
+    const { data } = await request.get(`/user/get-my-orders`, {
+      params: {
+        id: Cookies.get(USER_ID),
+      },
+    });
     return data;
   }
 );

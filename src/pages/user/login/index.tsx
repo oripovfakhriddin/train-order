@@ -157,6 +157,17 @@ const LoginPage = () => {
                 Ro'yhatdan o'tish
               </Link>
             </div>
+            <div className="flex mt-4 items-center justify-center gap-3">
+              <Link
+                to="/register"
+                className="text-[#1D2D5B] underline decoration-solid
+                transition-all duration-500
+                hover:text-red-600
+                "
+              >
+                Parolingizni unutdingizmi?
+              </Link>
+            </div>
           </div>
           <div className="absolute bottom-2.5 text-[12px] text-center">
             Copyright © 2024 of Oripov Fakhriddin

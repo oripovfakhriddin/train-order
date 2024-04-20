@@ -77,70 +77,82 @@ const UserWagonPage = () => {
 
   return (
     <Fragment>
-      <h1>Total: {total}</h1>
-      {loading ? "Loading...." : ""}
-      <section id="wagons">
-        <div className="container">
-          <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-              <thead className="text-xs text-gray-700  bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                  <th scope="col" className="px-6 py-3">
-                    #
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Raqami
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    <p>
-                      Hajmi( <span>m</span>
-                      <sup>3</sup> )
-                    </p>
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Turi
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Narxi(soat/$)
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-end">
-                    Amallar
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {wagons.map((wagon, index) => (
-                  <tr
-                    key={index}
-                    className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
-                  >
-                    <td className="px-6 py-4">{index + 1}</td>
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                    >
-                      {wagon.number}
+      {loading ? (
+        <div
+          id="crud-modal"
+          aria-hidden="true"
+          className={`flex overflow-y-auto backdrop-blur overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full`}
+        ></div>
+      ) : (
+        <section id="wagons">
+          <div className="container">
+            <div className="flex items-center justify-center">
+              <div>
+                <h1>Vagonlar soni: {total}</h1>
+              </div>
+            </div>
+            <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+              <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead className="text-xs text-gray-700  bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                  <tr>
+                    <th scope="col" className="px-6 py-3">
+                      #
                     </th>
-                    <td className="px-6 py-4">{wagon.capacity}</td>
-                    <td className="px-6 py-4">{wagon.type}</td>
-                    <td className="px-6 py-4">{wagon.price}</td>
-                    <td className="px-6 py-4 text-end">
-                      <button
-                        onClick={() => {
-                          showModal(wagon.id);
-                        }}
-                        className="bg-green-500 w-28"
-                      >
-                        Band qilish
-                      </button>
-                    </td>
+                    <th scope="col" className="px-6 py-3">
+                      Raqami
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      <p>
+                        Hajmi( <span>m</span>
+                        <sup>3</sup> )
+                      </p>
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Turi
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Narxi(soat/$)
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-end">
+                      Amallar
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {wagons.map((wagon, index) => (
+                    <tr
+                      key={index}
+                      className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
+                    >
+                      <td className="px-6 py-4">{index + 1}</td>
+                      <th
+                        scope="row"
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      >
+                        {wagon.number}
+                      </th>
+                      <td className="px-6 py-4">{wagon.capacity}</td>
+                      <td className="px-6 py-4">{wagon.type}</td>
+                      <td className="px-6 py-4">{wagon.price}</td>
+                      <td className="px-6 py-4 text-end">
+                        <button
+                          type="submit"
+                          onClick={() => {
+                            showModal(wagon.id);
+                          }}
+                          className="text-white w-28 text-center justify-center inline-flex items-center bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5  dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                        >
+                          Band qilish
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* START Order Modal  */}
       <div
@@ -228,11 +240,10 @@ const UserWagonPage = () => {
                     {...register("fromWhere")}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   >
-                    <option>Select category</option>
-                    <option value="TV">TV/Monitors</option>
-                    <option value="PC">PC</option>
-                    <option value="GA">Gaming/Console</option>
-                    <option value="PH">Phones</option>
+                    <option value="Namangan">Namangan</option>
+                    <option value="Toshkent">Toshkent</option>
+                    <option value="Andijon">Andijon</option>
+                    <option value="Farg'ona">Farg'ona</option>
                   </select>
                   {errors?.fromWhere && (
                     <p className="text-red-500 text-[14px]">
@@ -251,11 +262,10 @@ const UserWagonPage = () => {
                     {...register("toWhere")}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   >
-                    <option>Select category</option>
-                    <option value="TV">TV/Monitors</option>
-                    <option value="PC">PC</option>
-                    <option value="GA">Gaming/Console</option>
-                    <option value="PH">Phones</option>
+                    <option value="Namangan">Namangan</option>
+                    <option value="Toshkent">Toshkent</option>
+                    <option value="Andijon">Andijon</option>
+                    <option value="Farg'ona">Farg'ona</option>
                   </select>
                   {errors?.toWhere && (
                     <p className="text-red-500 text-[14px]">
