@@ -33,7 +33,7 @@ const Header = () => {
         { name: "Bosh sahifa", link: "/" },
         { name: "Vagon", link: "/wagon" },
         { name: "Buyurtmalar", link: "/order" },
-        { name: "Hisob", link: "/account" },
+        { name: "Profil", link: "/account" },
       ]
     : [
         { name: "Bosh sahifa", link: "/" },

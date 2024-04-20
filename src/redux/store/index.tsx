@@ -4,11 +4,13 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import Children from "../../types/children";
 import usersReducer, { userName } from "../slices/user";
+import usersOrderReducer, { userOrdersName } from "../slices/user-order";
 import wagonsReducer, { wagonName } from "../slices/wagon";
 
 const reducer = {
   [wagonName]: wagonsReducer,
   [userName]: usersReducer,
+  [userOrdersName]: usersOrderReducer,
 };
 
 export const Store = configureStore({

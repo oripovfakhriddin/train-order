@@ -5,14 +5,11 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import AdminLayout from "./components/layouts/admin";
 import UserLayout from "./components/layouts/user";
 import { AuthContext } from "./context/auth";
-import AccountsPage from "./pages/admin/accounts";
-import AnalyticsPage from "./pages/admin/analytics";
+import AdminAccountsPage from "./pages/admin/accounts";
 import DashboardPage from "./pages/admin/dashboard";
-import FilesPage from "./pages/admin/files";
-import InboxPage from "./pages/admin/inbox";
-import SchedulePage from "./pages/admin/schedule";
-import SearchPage from "./pages/admin/search";
-import SettingPage from "./pages/admin/setting";
+import AdminOrdersPage from "./pages/admin/orders";
+import AdminUsersPage from "./pages/admin/users";
+import AdminWagonsPage from "./pages/admin/wagons";
 import AccountPage from "./pages/user/account";
 import HomePage from "./pages/user/home";
 import LoginPage from "./pages/user/login";
@@ -60,13 +57,10 @@ const App = () => {
             }
           >
             <Route path="dashboard" element={<DashboardPage />} />
-            <Route path="accounts" element={<AccountsPage />} />
-            <Route path="analytics" element={<AnalyticsPage />} />
-            <Route path="files" element={<FilesPage />} />
-            <Route path="inbox" element={<InboxPage />} />
-            <Route path="schedule" element={<SchedulePage />} />
-            <Route path="search" element={<SearchPage />} />
-            <Route path="setting" element={<SettingPage />} />
+            <Route path="accounts" element={<AdminAccountsPage />} />
+            <Route path="users" element={<AdminUsersPage />} />
+            <Route path="wagons" element={<AdminWagonsPage />} />
+            <Route path="orders" element={<AdminOrdersPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

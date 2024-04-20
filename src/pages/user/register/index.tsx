@@ -10,7 +10,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 import LogoWagon from "../../../assets/wagon_logo.png";
-import { TOKEN, USER } from "../../../constants";
+import { ENDPOINT, TOKEN, USER } from "../../../constants";
 import { AuthContext } from "../../../context/auth";
 import registerSchema from "../../../schema/register";
 import RegisterFormValues from "../../../types/register";
@@ -19,6 +19,7 @@ const RegisterPage = () => {
   const navigate = useNavigate();
   const { setIsAuthenticated, setUser } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
+  
   const [openPassword, setOpenPassword] = useState(false);
   const {
     register,
@@ -29,7 +30,7 @@ const RegisterPage = () => {
   const onSubmit: SubmitHandler<RegisterFormValues> = async (values) => {
     try {
       setLoading(true);
-      const { data } = await axios.post("auth/sign-up", values);
+      const { data } = await axios.post(`${ENDPOINT}auth/sign-up`, values);
       console.log(data);
       Cookies.set(TOKEN, data.token);
       localStorage.setItem(USER, JSON.stringify(values));

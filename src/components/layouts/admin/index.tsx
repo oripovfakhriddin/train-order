@@ -1,19 +1,16 @@
 import { Fragment, useContext, useEffect, useState } from "react";
+import { AiFillDashboard } from "react-icons/ai";
 import { BiLogOut } from "react-icons/bi";
+import { BiSolidUserDetail } from "react-icons/bi";
+import { BiTrain } from "react-icons/bi";
+import { FaRegUserCircle } from "react-icons/fa";
+import { FaTableList } from "react-icons/fa6";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 
 import Cookies from "js-cookie";
 
-import Calendar from "../../../assets/Calendar.png";
-import Chart from "../../../assets/Chart.png";
-import Chart_fill from "../../../assets/Chart_fill.png";
-import Chat from "../../../assets/Chat.png";
 import Control from "../../../assets/control.png";
-import Folder from "../../../assets/Folder.png";
 import Logo from "../../../assets/logo.png";
-import Search from "../../../assets/Search.png";
-import Setting from "../../../assets/Setting.png";
-import User from "../../../assets/User.png";
 import { TOKEN, USER, USER_ID } from "../../../constants";
 import { AuthContext } from "../../../context/auth";
 import useScreenSize from "../../../hooks/useScreen";
@@ -31,14 +28,27 @@ const AdminLayout = () => {
   };
 
   const Menus = [
-    { title: "Dashboard", src: Chart_fill, to: "dashboard" },
-    { title: "Inbox", src: Chat, to: "inbox" },
-    { title: "Accounts", src: User, to: "accounts", gap: true },
-    { title: "Schedule ", src: Calendar, to: "schedule" },
-    { title: "Search", src: Search, to: "search" },
-    { title: "Analytics", src: Chart, to: "analytics" },
-    { title: "Files ", src: Folder, to: "files", gap: true },
-    { title: "Setting", src: Setting, to: "setting" },
+    {
+      title: "Dashboard",
+      src: <AiFillDashboard className="h-6 w-6" />,
+      to: "dashboard",
+    },
+    {
+      title: "Users",
+      src: <BiSolidUserDetail className="h-6 w-6" />,
+      to: "users",
+    },
+    {
+      title: "Orders ",
+      src: <FaTableList className="h-6 w-6" />,
+      to: "orders",
+    },
+    { title: "Wagons ", src: <BiTrain className="h-6 w-6" />, to: "wagons" },
+    {
+      title: "Accounts",
+      src: <FaRegUserCircle className="h-6 w-6" />,
+      to: "accounts",
+    },
   ];
 
   useEffect(() => {
@@ -88,14 +98,14 @@ const AdminLayout = () => {
             {Menus.map((Menu, index) => (
               <li key={index}>
                 <NavLink
-                  className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 
-              ${Menu.gap ? "mt-9" : "mt-2"} ${
-                    location.pathname.split("/")[2] === Menu.to &&
-                    "bg-light-white text-green-500"
-                  } `}
+                  className={`flex  rounded-md p-2 cursor-pointer mb-3 hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 
+               ${
+                 location.pathname.split("/")[2] === Menu.to &&
+                 "bg-light-white text-green-500"
+               } `}
                   to={Menu.to}
                 >
-                  <img src={Menu.src} />
+                  {Menu.src}
                   <span
                     className={`${!open && "hidden"} origin-left duration-200`}
                   >

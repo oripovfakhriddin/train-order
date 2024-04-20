@@ -21,7 +21,7 @@ request.interceptors.response.use(
     if (err?.message === "Network Error") {
       toast.error(`${err?.message}`);
     } else {
-      toast.error(`${err?.response?.data?.msg}`);
+      toast.error(`${err?.response?.data?.message}`);
     }
     return Promise.reject(err);
   }
