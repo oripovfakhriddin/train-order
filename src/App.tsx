@@ -15,6 +15,7 @@ import HomePage from "./pages/user/home";
 import LoginPage from "./pages/user/login";
 import UserOrderPage from "./pages/user/order";
 import RegisterPage from "./pages/user/register";
+import MySingleOrderPage from "./pages/user/single-order";
 import UserWagonPage from "./pages/user/wagon";
 
 const App = () => {
@@ -44,6 +45,16 @@ const App = () => {
               }
             />
             <Route path="/wagon" element={<UserWagonPage />} />
+            <Route
+              path="/my-single-order"
+              element={
+                isAuthenticated ? (
+                  <MySingleOrderPage />
+                ) : (
+                  <Navigate to={"/login"} />
+                )
+              }
+            />
           </Route>
 
           <Route

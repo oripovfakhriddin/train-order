@@ -1,9 +1,12 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { IoIosCreate } from "react-icons/io";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
+import { AuthContext } from "../../../context/auth";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { getWagons } from "../../../redux/slices/wagon";
 import orderSchema from "../../../schema/order";
@@ -11,8 +14,10 @@ import request from "../../../server/request";
 import OrderFormValues from "../../../types/order";
 
 const UserWagonPage = () => {
+  const { isAuthenticated } = useContext(AuthContext);
   const { wagons, loading, total } = useAppSelector((state) => state.wagon);
   const dispatch = useAppDispatch();
+  const [callback, setCallback] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [wagonId, setWagonId] = useState<string | null>(null);
 
@@ -50,6 +55,7 @@ const UserWagonPage = () => {
     ) {
       const { data } = await request.post("/order/save", dataOrder);
       toast.success(data.message);
+      refetch();
     } else {
       toast.error("Siz kiritga qiymatlarda xatolik mavjud");
     }
@@ -64,20 +70,63 @@ const UserWagonPage = () => {
     setIsModalOpen(false);
   };
 
-  // const [callback, setCallback] = useState(false);
-
   useEffect(() => {
-    dispatch(getWagons());
-    // dispatch(getUsers());
-  }, [dispatch]);
+    isAuthenticated ? dispatch(getWagons()) : "";
+  }, [dispatch, callback, isAuthenticated]);
 
-  // const refetch = () => {
-  //   setCallback(!callback);
-  // };
+  const refetch = () => {
+    setCallback(!callback);
+  };
 
   return (
     <Fragment>
-      {loading ? (
+      {!isAuthenticated ? (
+        <div
+          className={`flex fixed backdrop-blur top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0  max-h-full`}
+        >
+          <div className="relative p-4 w-full max-w-md max-h-full">
+            <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+              <div className="p-4 md:p-5 text-center">
+                <svg
+                  className="mx-auto mb-4 text-green-400 w-12 h-12 dark:text-gray-200"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                  />
+                </svg>
+                <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                  Saytdan foydalanish uchun tizimga kirishni amalga
+                  oshirishingiz talab etiladi!
+                </h3>
+                <button
+                  type="button"
+                  className="hover:text-white me-4 text-gray-900 bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium transition-all rounded-lg text-sm inline-flex items-center  text-center"
+                >
+                  <Link className="w-full h-full px-5 py-2.5" to="/">
+                    Bekor qilish
+                  </Link>
+                </button>
+                <button
+                  type="button"
+                  className="hover:text-white text-gray-900 bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium transition-all rounded-lg text-sm inline-flex items-center  text-center"
+                >
+                  <Link className="w-full h-full px-5 py-2.5" to="/login">
+                    Tizimga kirish
+                  </Link>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : loading ? (
         <div
           id="crud-modal"
           aria-hidden="true"
@@ -86,34 +135,48 @@ const UserWagonPage = () => {
       ) : (
         <section id="wagons">
           <div className="container">
-            <div className="flex items-center justify-center">
-              <div>
-                <h1>Vagonlar soni: {total}</h1>
-              </div>
+            <div className="my-4 flex flex-col sm:flex-row gap-3 items-center justify-between">
+              <h1 className="text-2xl sm:text-4xl">Barcha vagonlar</h1>
+              <h4 className="text-1xl sm:text-2xl py-2 px-12 bg-sky-300 rounded-lg">
+                Jami: {total}
+              </h4>
             </div>
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
               <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-gray-700  bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <thead className="text-xl text-gray-700  bg-amber-400 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
-                    <th scope="col" className="px-6 py-3">
+                    <th
+                      scope="col"
+                      className="px-2 py-1 md:px-4 md:py-3 text-center min-w-14"
+                    >
                       #
                     </th>
-                    <th scope="col" className="px-6 py-3">
+
+                    <th scope="col" className="px-2 py-1 md:px-4 md:py-3">
                       Raqami
                     </th>
-                    <th scope="col" className="px-6 py-3">
+                    <th
+                      scope="col"
+                      className="px-2 py-1 md:px-4 md:py-3 text-center min-w-36"
+                    >
                       <p>
                         Hajmi( <span>m</span>
                         <sup>3</sup> )
                       </p>
                     </th>
-                    <th scope="col" className="px-6 py-3">
+                    <th scope="col" className="px-2 py-1 md:px-4 md:py-3">
                       Turi
                     </th>
-                    <th scope="col" className="px-6 py-3">
+                    <th
+                      scope="col"
+                      className="px-2 py-1 md:px-4 md:py-3 text-center "
+                    >
                       Narxi(soat/$)
                     </th>
-                    <th scope="col" className="px-6 py-3 text-end">
+                    <th
+                      scope="col"
+                      className="px-2 py-1 md:px-4 md:py-3 text-end"
+                    >
                       Amallar
                     </th>
                   </tr>
@@ -124,17 +187,32 @@ const UserWagonPage = () => {
                       key={index}
                       className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
                     >
-                      <td className="px-6 py-4">{index + 1}</td>
+                      <th className="px-2 py-1 md:px-4 md:py-3 text-center">
+                        {index + 1}.
+                      </th>
+
                       <th
                         scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        className="px-2 py-1 md:px-4 md:py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                       >
                         {wagon.number}
                       </th>
-                      <td className="px-6 py-4">{wagon.capacity}</td>
-                      <td className="px-6 py-4">{wagon.type}</td>
-                      <td className="px-6 py-4">{wagon.price}</td>
-                      <td className="px-6 py-4 text-end">
+                      <td className="px-2 py-1 md:px-4 md:py-3 text-center">
+                        {wagon.capacity}
+                      </td>
+                      <td className="px-2 py-1 md:px-4 md:py-3">
+                        {wagon.type}
+                      </td>
+                      <th className="px-2 py-1 md:px-4 md:py-3 text-center">
+                        {wagon.price}
+                      </th>
+                      <td className="px-2 py-1 md:px-4 md:py-3 text-end flex items-center gap-2 justify-end">
+                        <button
+                          type="submit"
+                          className="text-white w-28 text-center justify-center inline-flex items-center bg-orange-400 hover:bg-orange-600 focus:ring-4 focus:outline-none focus:ring-orange-200 font-medium rounded-lg text-sm px-5 py-2.5  dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800"
+                        >
+                          Ma'lumot
+                        </button>
                         <button
                           type="submit"
                           onClick={() => {
@@ -167,7 +245,7 @@ const UserWagonPage = () => {
           <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                Create New Product
+                Vagonni band qilish!
               </h3>
               <button
                 type="button"
@@ -312,23 +390,13 @@ const UserWagonPage = () => {
                   )}
                 </div>
               </div>
+
               <button
                 type="submit"
-                className="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                className="text-white inline-flex w-full items-center justify-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
-                <svg
-                  className="me-1 -ms-1 w-5 h-5"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-                Band qilish
+                <IoIosCreate className="me-2 w-6 h-6" />
+                Vagonni band qilish
               </button>
             </form>
           </div>

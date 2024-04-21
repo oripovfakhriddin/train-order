@@ -3,10 +3,10 @@ import Cookies from "js-cookie";
 
 import { USER_ID } from "../../constants";
 import request from "../../server/request";
-import User from "../../types/user";
+import UserOrdersTypes from "../../types/user-orders";
 
 interface initialStateTypes {
-  usersOrders: any;
+  usersOrders: UserOrdersTypes[];
   loading: boolean;
   total: number;
 }
@@ -18,7 +18,7 @@ const initialState: initialStateTypes = {
 };
 
 export const getUsersOrders = createAsyncThunk(
-  "users-orders/fetching",
+  "user-orders/fetching",
   async () => {
     const { data } = await request.get(`/user/get-my-orders`, {
       params: {
@@ -44,7 +44,7 @@ export const userSlice = createSlice({
       })
       .addCase(
         getUsersOrders.fulfilled,
-        (state, { payload }: PayloadAction<User[]>) => {
+        (state, { payload }: PayloadAction<UserOrdersTypes[]>) => {
           state.loading = false;
           state.usersOrders = payload;
           state.total = payload.length;
