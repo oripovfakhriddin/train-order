@@ -61,7 +61,7 @@ const UserAccountPage = () => {
     const { data } = await request.get("user/get-by-id", {
       params: { id: Cookies.get(USER_ID) },
     });
-    setUserData(data);
+    setUserData(data.data);
     setLoading(false);
   };
 
@@ -111,11 +111,7 @@ const UserAccountPage = () => {
       shouldDirty: true,
       shouldTouch: true,
     });
-    setValue("password", "12345", {
-      shouldValidate: true,
-      shouldDirty: true,
-      shouldTouch: true,
-    });
+    setValue("password", "");
     setIsEditModalOpen(true);
   };
 
@@ -144,6 +140,9 @@ const UserAccountPage = () => {
       ) : (
         <section id="account">
           <div className="container">
+            <h1 className="text-xl sm:text-4xl text-center my-2">
+              Mening Profilim
+            </h1>
             <div>
               <div className="md:grid grid-cols-4 grid-rows-2  bg-white gap-2 p-1 sm:p-4 rounded-xl">
                 <div className="md:col-span-1  shadow-xl ">
@@ -158,43 +157,43 @@ const UserAccountPage = () => {
                   </div>
                 </div>
                 <div className="md:col-span-3  shadow-xl p-1 sm:p-4 py-4 space-y-2 ">
-                  <div className="flex ">
+                  <div className="flex item items-center">
                     <span className="text-sm   font-bold uppercase border-2 rounded-l px-2 py-2 bg-gray-200 whitespace-no-wrap w-2/6">
                       F.I.O.:
                     </span>
-                    <p className="px-4 border-2 border-l-0 cursor-default border-gray-300 focus:outline-none  rounded-md rounded-l-none shadow-sm -ml-1 w-4/6">
+                    <p className="px-4 border-2 py-[6px] border-l-0 cursor-default border-gray-300 focus:outline-none  rounded-md rounded-l-none shadow-sm -ml-1 w-4/6">
                       {userData?.fullName}
                     </p>
                   </div>
-                  <div className="flex ">
+                  <div className="flex item items-center">
                     <span className="text-sm  font-bold uppercase border-2 rounded-l px-2 py-2 bg-gray-300 whitespace-no-wrap w-2/6">
                       Raqami:
                     </span>
-                    <p className="px-4 border-2 border-l-0 cursor-default border-gray-300 focus:outline-none  rounded-md rounded-l-none shadow-sm -ml-1 w-4/6">
+                    <p className="px-4 border-2 py-[6px] border-l-0 cursor-default border-gray-300 focus:outline-none  rounded-md rounded-l-none shadow-sm -ml-1 w-4/6">
                       {userData?.number}
                     </p>
                   </div>
-                  <div className="flex ">
+                  <div className="flex item items-center">
                     <span className="text-sm   font-bold uppercase border-2 rounded-l px-2 py-2 bg-gray-200 whitespace-no-wrap w-2/6">
                       Jinsi:
                     </span>
-                    <p className="px-4 border-2 border-l-0 cursor-default border-gray-300 focus:outline-none  rounded-md rounded-l-none shadow-sm -ml-1 w-4/6">
+                    <p className="px-4 border-2 py-[6px] border-l-0 cursor-default border-gray-300 focus:outline-none  rounded-md rounded-l-none shadow-sm -ml-1 w-4/6">
                       {userData?.gender}
                     </p>
                   </div>
-                  <div className="flex ">
+                  <div className="flex item items-center">
                     <span className="text-sm   font-bold uppercase border-2 rounded-l px-2 py-2 bg-gray-300 whitespace-no-wrap w-2/6">
                       Email:
                     </span>
-                    <p className="px-4 border-2 border-l-0 cursor-default border-gray-300 focus:outline-none  rounded-md rounded-l-none shadow-sm -ml-1 w-4/6">
+                    <p className="px-4 border-2 py-[6px] border-l-0 cursor-default border-gray-300 focus:outline-none  rounded-md rounded-l-none shadow-sm -ml-1 w-4/6">
                       {userData?.email}
                     </p>
                   </div>
-                  <div className="flex ">
+                  <div className="flex item items-center">
                     <span className="text-sm  font-bold uppercase border-2 rounded-l px-2 py-2 bg-gray-300 whitespace-no-wrap w-2/6">
                       Role:
                     </span>
-                    <p className="px-4 border-2 border-l-0 cursor-default border-gray-300 focus:outline-none  rounded-md rounded-l-none shadow-sm -ml-1 w-4/6">
+                    <p className="px-4 border-2 py-[6px] border-l-0 cursor-default border-gray-300 focus:outline-none  rounded-md rounded-l-none shadow-sm -ml-1 w-4/6">
                       {userData?.role}
                     </p>
                   </div>

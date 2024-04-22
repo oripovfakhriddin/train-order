@@ -111,11 +111,7 @@ const AdminAccountsPage = () => {
       shouldDirty: true,
       shouldTouch: true,
     });
-    setValue("password", "12345", {
-      shouldValidate: true,
-      shouldDirty: true,
-      shouldTouch: true,
-    });
+    setValue("password", "");
     setIsEditModalOpen(true);
   };
 
