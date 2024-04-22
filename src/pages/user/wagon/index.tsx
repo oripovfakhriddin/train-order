@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
+import { TRAIN_STATION } from "../../../constants";
 import { AuthContext } from "../../../context/auth";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { getWagons } from "../../../redux/slices/wagon";
@@ -318,10 +319,9 @@ const UserWagonPage = () => {
                     {...register("fromWhere")}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   >
-                    <option value="Namangan">Namangan</option>
-                    <option value="Toshkent">Toshkent</option>
-                    <option value="Andijon">Andijon</option>
-                    <option value="Farg'ona">Farg'ona</option>
+                    {TRAIN_STATION.map((station) => (
+                      <option value={station}>{station}</option>
+                    ))}
                   </select>
                   {errors?.fromWhere && (
                     <p className="text-red-500 text-[14px]">
@@ -340,10 +340,9 @@ const UserWagonPage = () => {
                     {...register("toWhere")}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   >
-                    <option value="Namangan">Namangan</option>
-                    <option value="Toshkent">Toshkent</option>
-                    <option value="Andijon">Andijon</option>
-                    <option value="Farg'ona">Farg'ona</option>
+                    {TRAIN_STATION.map((station) => (
+                      <option value={station}>{station}</option>
+                    ))}
                   </select>
                   {errors?.toWhere && (
                     <p className="text-red-500 text-[14px]">

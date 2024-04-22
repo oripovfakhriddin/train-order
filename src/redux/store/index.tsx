@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 
 import Children from "../../types/children";
+import cancelOrdersReducer, { cancelOrdersName } from "../slices/cancel-orders";
 import allUsersOrderReducer, { allUsersOrdersName } from "../slices/orders";
 import usersReducer, { userName } from "../slices/user";
 import usersOrderReducer, { userOrdersName } from "../slices/user-order";
@@ -13,6 +14,7 @@ const reducer = {
   [userName]: usersReducer,
   [userOrdersName]: usersOrderReducer,
   [allUsersOrdersName]: allUsersOrderReducer,
+  [cancelOrdersName]: cancelOrdersReducer,
 };
 
 export const Store = configureStore({

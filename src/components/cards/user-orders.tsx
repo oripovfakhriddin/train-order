@@ -2,6 +2,9 @@ import { Fragment } from "react";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { NavLink } from "react-router-dom";
 
+import Cookies from "js-cookie";
+
+import { ORDER_ID } from "../../constants";
 import UserOrdersTypes from "../../types/user-orders";
 
 interface UserOrdersCardProps extends UserOrdersTypes {
@@ -18,7 +21,7 @@ const UserOrdersCard = ({
   index,
 }: UserOrdersCardProps) => {
   const singleOrder = (id: string) => {
-    localStorage.setItem("order-id", id);
+    Cookies.set(ORDER_ID, id);
   };
 
   return (

@@ -13,10 +13,6 @@ const UserOrderPage = () => {
     dispatch(getUsersOrders());
   }, [dispatch]);
 
-  console.log(loading);
-  console.log(total);
-  console.log(usersOrders);
-
   return (
     <Fragment>
       {loading ? (

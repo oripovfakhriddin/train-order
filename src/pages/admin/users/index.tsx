@@ -135,7 +135,7 @@ const AdminUsersPage = () => {
           className={`flex overflow-y-auto backdrop-blur overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full`}
         ></div>
       ) : (
-        <section id="wagons">
+        <section id="users">
           <div className="flex items-center justify-between">
             <div>
               <h1>Total: {total}</h1>
@@ -256,7 +256,7 @@ const AdminUsersPage = () => {
           </div>
         </section>
       )}
-      
+
       {/* START delete user Modal  */}
       <div
         className={`${
