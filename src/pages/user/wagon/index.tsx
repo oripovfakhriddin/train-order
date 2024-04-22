@@ -402,7 +402,6 @@ const UserWagonPage = () => {
           </div>
         </div>
       </div>
-
       {/* FINISH Order Modal  */}
     </Fragment>
   );

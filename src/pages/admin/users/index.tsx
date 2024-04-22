@@ -51,7 +51,6 @@ const AdminUsersPage = () => {
     resetField("password");
     setIsEditModalOpen(true);
     setSelected(null);
-    // setUserId(id);
   };
 
   const closeEditModal = () => {

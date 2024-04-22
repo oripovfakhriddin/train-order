@@ -123,7 +123,6 @@ const AdminLayout = () => {
                 className={`flex  rounded-md p-2 cursor-pointer bg-red-600 
               text-gray-300 text-sm items-center gap-x-4 "mt-9"  w-full `}
               >
-                {/* <img src={<BiLogOut />} /> */}
                 <BiLogOut className="h-6 w-6" />
                 <span
                   className={`${!open && "hidden"} origin-left duration-200`}

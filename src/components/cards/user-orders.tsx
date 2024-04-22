@@ -17,7 +17,9 @@ const UserOrdersCard = ({
   price,
   index,
 }: UserOrdersCardProps) => {
-  localStorage.setItem("order-id", id);
+  const singleOrder = (id: string) => {
+    localStorage.setItem("order-id", id);
+  };
 
   return (
     <Fragment>
@@ -49,6 +51,9 @@ const UserOrdersCard = ({
         </div>
         <NavLink
           to={"/my-single-order"}
+          onClick={() => {
+            singleOrder(id);
+          }}
           className={
             "hover:text-white w-full p-2  text-gray-900 bg-orange-400 hover:bg-orange-600 focus:ring-4 focus:outline-none focus:ring-orange-300 dark:focus:ring-orange-800 font-medium transition-all rounded-lg text-sm inline-flex items-center justify-center gap-2 text-center"
           }
