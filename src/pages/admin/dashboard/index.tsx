@@ -1,16 +1,16 @@
 import { Fragment, useEffect } from "react";
 
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { getAllUsersOrders } from "../../../redux/slices/orders";
 import { getUsers } from "../../../redux/slices/user";
-import { getUsersOrders } from "../../../redux/slices/user-order";
 import { getWagons } from "../../../redux/slices/wagon";
 
 const DashboardPage = () => {
   const { total: usersTotal, loading: usersLoading } = useAppSelector(
     (state) => state.user
   );
-  const { total: usersOrdersTotal, loading: usersOrderLoading } =
-    useAppSelector((state) => state.userOrders);
+  const { total: allUsersOrdersTotal, loading: allUsersOrderLoading } =
+    useAppSelector((state) => state.allUsersOrders);
   const { total: wagonsTotal, loading: wagonsLoading } = useAppSelector(
     (state) => state.wagon
   );
@@ -18,13 +18,13 @@ const DashboardPage = () => {
 
   useEffect(() => {
     dispatch(getUsers());
-    dispatch(getUsersOrders());
+    dispatch(getAllUsersOrders());
     dispatch(getWagons());
   }, [dispatch]);
 
   return (
     <Fragment>
-      {usersLoading && usersOrderLoading && wagonsLoading ? (
+      {usersLoading && allUsersOrderLoading && wagonsLoading ? (
         <div
           id="crud-modal"
           aria-hidden="true"
@@ -33,7 +33,7 @@ const DashboardPage = () => {
       ) : (
         <div>
           <h1>Users: {usersTotal}</h1>
-          <h1>UsersOrder: {usersOrdersTotal}</h1>
+          <h1>AllUsersOrder: {allUsersOrdersTotal}</h1>
           <h1>Wagons: {wagonsTotal}</h1>
         </div>
       )}
