@@ -16,7 +16,7 @@ const initialState: initialStateTypes = {
 };
 
 export const getCancelOrders = createAsyncThunk("wagons/fetching", async () => {
-  const { data } = await request.get("wagon/get-all");
+  const { data } = await request.get("order/get-canceled-orders");
   return data;
 });
 

@@ -1,4 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
+import { BiEditAlt } from "react-icons/bi";
+import { RiDeleteBin5Fill } from "react-icons/ri";
 
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { getWagons } from "../../../redux/slices/wagon";
@@ -40,32 +42,49 @@ const AdminWagonsPage = () => {
   return (
     <Fragment>
       <h1>Total: {total}</h1>
-      {loading ? "Loading...." : ""}
-      <section id="wagons">
-        <div className="container">
+      {loading ? (
+        <div
+          id="loading-modal"
+          aria-hidden="true"
+          className={`flex overflow-y-auto backdrop-blur overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full inset-0 h-[calc(100%-1rem)] max-h-full`}
+        ></div>
+      ) : (
+        <section id="wagons">
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
               <thead className="text-xs text-gray-700  bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                  <th scope="col" className="px-6 py-3">
+                  <th
+                    scope="col"
+                    className="px-2 py-1 md:px-4 md:py-3 text-center min-w-14"
+                  >
                     #
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="px-2 py-1 md:px-4 md:py-3">
                     Raqami
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th
+                    scope="col"
+                    className="px-2 py-1 md:px-4 md:py-3 text-center min-w-36"
+                  >
                     <p>
                       Hajmi( <span>m</span>
                       <sup>3</sup> )
                     </p>
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th scope="col" className="px-2 py-1 md:px-4 md:py-3">
                     Turi
                   </th>
-                  <th scope="col" className="px-6 py-3">
+                  <th
+                    scope="col"
+                    className="px-2 py-1 md:px-4 md:py-3 text-center"
+                  >
                     Narxi(soat/$)
                   </th>
-                  <th scope="col" className="px-6 py-3 text-end">
+                  <th
+                    scope="col"
+                    className="px-2 py-1 md:px-4 md:py-3 text-end"
+                  >
                     Amallar
                   </th>
                 </tr>
@@ -76,24 +95,31 @@ const AdminWagonsPage = () => {
                     key={index}
                     className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
                   >
-                    <td className="px-6 py-4">{index + 1}</td>
+                    <th className="px-2 py-1 md:px-4 md:py-3 text-center">
+                      {index + 1}.
+                    </th>
                     <th
                       scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      className="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                     >
                       {wagon.number}
                     </th>
-                    <td className="px-6 py-4">{wagon.capacity}</td>
-                    <td className="px-6 py-4">{wagon.type}</td>
-                    <td className="px-6 py-4">{wagon.price}</td>
-                    <td className="px-6 py-4 text-end">
+                    <td className="px-2 py-1 md:px-4 md:py-3 text-center">
+                      {wagon.capacity}
+                    </td>
+                    <td className="px-2 py-1 md:px-4 md:py-3">{wagon.type}</td>
+                    <td className="px-2 py-1 md:px-4 md:py-3 text-center">
+                      {wagon.price}
+                    </td>
+                    <td className="px-2 py-1 md:px-4 md:py-3 text-end flex items-center gap-2 justify-end">
                       <button
                         type="button"
                         onClick={() => {
                           showEditModal(wagon.id);
                         }}
-                        className="focus:outline-none text-white bg-orange-400 hover:bg-orange-500 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-orange-900"
+                        className="focus:outline-none inline-flex items-center justify-between text-white bg-orange-400 hover:bg-orange-500 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-orange-900"
                       >
+                        <BiEditAlt className="h-5 w-5  mr-2" />
                         Tahrirlash
                       </button>
 
@@ -101,8 +127,9 @@ const AdminWagonsPage = () => {
                         onClick={() => {
                           showDeleteModal(wagon.id);
                         }}
-                        className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                        className="focus:outline-none inline-flex items-center justify-between text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
                       >
+                        <RiDeleteBin5Fill className="h-5 w-5  mr-2" />
                         O'chirish
                       </button>
                     </td>
@@ -111,8 +138,9 @@ const AdminWagonsPage = () => {
               </tbody>
             </table>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
+
       {/* START delete wagon Modal  */}
       <div
         className={`${

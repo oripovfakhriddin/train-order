@@ -5,7 +5,6 @@ import { BiEditAlt } from "react-icons/bi";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { IoIosCreate } from "react-icons/io";
 import { MdOutlineCancel } from "react-icons/md";
-import { RiDeleteBin5Fill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -30,14 +29,12 @@ const MySingleOrderPage = () => {
     resolver: yupResolver(orderSchema),
   });
 
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [orderUserId, setOrderUserId] = useState<null | string>(null);
   const [loading, setLoading] = useState(false);
   const [editLoading, setEditLoading] = useState(false);
   const [cancelLoading, setCancelLoading] = useState(false);
-  const [deleteLoading, setDeleteLoading] = useState(false);
   const [callback, setCallback] = useState(false);
 
   const refetch = () => {
@@ -77,7 +74,7 @@ const MySingleOrderPage = () => {
         fromWhere: values.fromWhere,
         toWhere: values.toWhere,
       };
-
+      console.log(orderData?.createdBy);
       if (
         dataOrder.startTime !== dataOrder.endTime &&
         dataOrder.fromWhere !== dataOrder.toWhere
@@ -118,30 +115,6 @@ const MySingleOrderPage = () => {
       setCancelLoading(false);
       refetch();
     }
-  };
-
-  const deleteUserOrder = async () => {
-    try {
-      setDeleteLoading(true);
-      const { data } = await request.delete("order/delete", {
-        params: { id: orderUserId },
-      });
-      setDeleteLoading(false);
-      toast.info(data.message);
-      refetch();
-    } finally {
-      setDeleteLoading(false);
-      refetch();
-    }
-  };
-
-  const showDeleteModal = (id: string) => {
-    setIsDeleteModalOpen(true);
-    setOrderUserId(id);
-  };
-
-  const closeDeleteModal = () => {
-    setIsDeleteModalOpen(false);
   };
 
   const showCancelModal = (id: string) => {
@@ -232,22 +205,6 @@ const MySingleOrderPage = () => {
                   <p>{orderData?.createdTime.split("T")[1].split(".")[0]} </p>
                 </div>
                 <hr />
-                {orderData?.createdTime === orderData?.updatedTime ? (
-                  ""
-                ) : (
-                  <Fragment>
-                    <div className="flex items-center justify-between gap-3 mb-2">
-                      <p>Buyurtma tahrirlangan sana: </p>
-                      <p>{orderData?.updatedTime.split("T")[0]} </p>
-                    </div>
-                    <div className="flex items-center justify-between gap-3 mb-2">
-                      <p>Buyurtma tahrirlangan soat: </p>
-                      <p>
-                        {orderData?.createdTime.split("T")[1].split(".")[0]}{" "}
-                      </p>
-                    </div>
-                  </Fragment>
-                )}
                 <div className="flex items-center justify-between gap-3 mb-2">
                   <p>Boshlanish kuni: </p>
                   <p>{orderData?.startTime.split(" ")[0]}</p>
@@ -264,7 +221,7 @@ const MySingleOrderPage = () => {
                 </div>
                 <hr />
                 <div className="flex items-center justify-between gap-3 mb-2">
-                  <p>Tugash kuni: </p>
+                  <p>Tugash soati: </p>
                   <p>{orderData?.endTime.split(" ")[1]}</p>
                 </div>
                 <hr />
@@ -284,16 +241,30 @@ const MySingleOrderPage = () => {
                 </div>
                 <hr />
                 <div className="flex items-center flex-col sm:flex-row justify-between gap-3 mt-6">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      showEditModal(orderData?.id);
-                    }}
-                    className="focus:outline-none w-full inline-flex items-center justify-center text-white bg-sky-400 hover:bg-sky-500 focus:ring-4 focus:ring-sky-300 font-medium rounded-lg text-sm px-5 py-2.5  dark:focus:ring-sky-900"
-                  >
-                    <BiEditAlt className="h-5 w-5  mr-2" />
-                    Tahrirlash
-                  </button>
+                  {orderData?.cancel ? (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        toast.info("Ushbu buyurtma allaqachon bekor qilingan!");
+                      }}
+                      className="focus:outline-none w-full inline-flex items-center justify-center text-white bg-sky-400 hover:bg-sky-500 focus:ring-4 focus:ring-sky-300 font-medium rounded-lg text-sm px-5 py-2.5  dark:focus:ring-sky-900"
+                    >
+                      <BiEditAlt className="h-5 w-5  mr-2" />
+                      Tahrirlash
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        showEditModal(orderData?.id);
+                      }}
+                      className="focus:outline-none w-full inline-flex items-center justify-center text-white bg-sky-400 hover:bg-sky-500 focus:ring-4 focus:ring-sky-300 font-medium rounded-lg text-sm px-5 py-2.5  dark:focus:ring-sky-900"
+                    >
+                      <BiEditAlt className="h-5 w-5  mr-2" />
+                      Tahrirlash
+                    </button>
+                  )}
+
                   {orderData?.cancel ? (
                     <button className="focus:outline-none w-full inline-flex items-center justify-center text-white bg-orange-400 hover:bg-orange-600 focus:ring-4 focus:ring-orange-200 font-medium rounded-lg text-sm px-5 py-2.5   dark:bg-orange-600 dark:hover:bg-orange-600 dark:focus:ring-orange-600">
                       Bekor qilingan
@@ -309,15 +280,6 @@ const MySingleOrderPage = () => {
                       Bekor qilish
                     </button>
                   )}
-                  <button
-                    onClick={() => {
-                      showDeleteModal(orderData?.id);
-                    }}
-                    className="focus:outline-none w-full inline-flex items-center justify-center text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5   dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                  >
-                    <RiDeleteBin5Fill className="h-5 w-5  mr-2" />
-                    O'chirish
-                  </button>
                 </div>
               </div>
 
@@ -334,77 +296,6 @@ const MySingleOrderPage = () => {
           </section>
         )
       )}
-
-      {/* START delete order Modal  */}
-      <div
-        className={`${
-          isDeleteModalOpen ? "flex" : "hidden"
-        } fixed backdrop-blur top-0 right-0 left-0 z-50 justify-center items-center w-full inset-0  max-h-full`}
-      >
-        <div className="relative p-4 w-full max-w-md max-h-full">
-          <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-            <button
-              type="button"
-              className="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-              onClick={closeDeleteModal}
-            >
-              <svg
-                className="w-3 h-3"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 14 14"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                />
-              </svg>
-              <span className="sr-only">Close modal</span>
-            </button>
-            <div className="p-4 md:p-5 text-center">
-              <svg
-                className="mx-auto mb-4 text-red-600 w-12 h-12 dark:text-gray-200"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                />
-              </svg>
-              <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                {deleteLoading
-                  ? "Buyurtma o'chirilmoqda..."
-                  : "Ushbu buyurtmani o'chirishni tasdiqlaysizmi?"}
-              </h3>
-              <button
-                type="button"
-                onClick={deleteUserOrder}
-                className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
-              >
-                {deleteLoading ? "Kuting..." : "Tasdiqlash"}
-              </button>
-              <button
-                type="button"
-                onClick={closeDeleteModal}
-                className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-              >
-                Bekor qilish
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* FINISH delete order Modal  */}
 
       {/* START Cancel order Modal  */}
       <div

@@ -33,15 +33,15 @@ const DashboardPage = () => {
       wagonsLoading &&
       cancelOrdersLoading ? (
         <div
-          id="crud-modal"
+          id="loading-modal"
           aria-hidden="true"
           className={`flex overflow-y-auto backdrop-blur overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full`}
         ></div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           <div className="">Foydalanuvchilar: {usersTotal}</div>
-          <div className="">Vagornlar: {wagonsTotal}</div>
-          <div className="">Buyutmalar: {allUsersOrdersTotal}</div>
+          <div className="">Vagonlar: {wagonsTotal}</div>
+          <div className="">Buyurtmalar: {allUsersOrdersTotal}</div>
           <div className="">
             Bekor qilingan buyurtmalar: {cancelOrdersTotal}
           </div>
