@@ -1,4 +1,10 @@
 import { Fragment, useEffect } from "react";
+// import { BiLogOut } from "react-icons/bi";
+import { BiSolidUserDetail } from "react-icons/bi";
+import { BiTrain } from "react-icons/bi";
+// import { FaRegUserCircle } from "react-icons/fa";
+import { FaTableList } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { getCancelOrders } from "../../../redux/slices/cancel-orders";
@@ -39,11 +45,80 @@ const DashboardPage = () => {
         ></div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          <div className="">Foydalanuvchilar: {usersTotal}</div>
-          <div className="">Vagonlar: {wagonsTotal}</div>
-          <div className="">Buyurtmalar: {allUsersOrdersTotal}</div>
-          <div className="">
-            Bekor qilingan buyurtmalar: {cancelOrdersTotal}
+          <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <div className="flex flex-col items-center py-4">
+              <BiSolidUserDetail className="w-32 h-32 text-blue-500" />
+              <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">
+                Foydalanuvchilar
+              </h5>
+              <span className="text-sm text-gray-500 dark:text-gray-400">
+                Jami: {usersTotal}
+              </span>
+              <div className="flex mt-4 md:mt-6">
+                <Link
+                  to="/admin/users"
+                  className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                  Ko'rish
+                </Link>
+              </div>
+            </div>
+          </div>
+          <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <div className="flex flex-col items-center py-4">
+              <FaTableList className="w-32 h-32 text-blue-500" />
+              <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">
+                Buyurtmalar
+              </h5>
+              <span className="text-sm text-gray-500 dark:text-gray-400">
+                Jami: {allUsersOrdersTotal}
+              </span>
+              <div className="flex mt-4 md:mt-6">
+                <Link
+                  to="#"
+                  className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                  Ko'rish
+                </Link>
+              </div>
+            </div>
+          </div>
+          <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <div className="flex flex-col items-center py-4">
+              <BiTrain className="w-32 h-32 text-blue-500" />
+              <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">
+                Vagonlar
+              </h5>
+              <span className="text-sm text-gray-500 dark:text-gray-400">
+                Jami: {wagonsTotal}
+              </span>
+              <div className="flex mt-4 md:mt-6">
+                <Link
+                  to="#"
+                  className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                  Ko'rish
+                </Link>
+              </div>
+            </div>
+          </div>
+          <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <div className="flex flex-col items-center py-4">
+              <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">
+                Bekor qilingan buyurtmalar
+              </h5>
+              <span className="text-sm text-gray-500 dark:text-gray-400">
+                Jami: {cancelOrdersTotal}
+              </span>
+              <div className="flex mt-4 md:mt-6">
+                <Link
+                  to="#"
+                  className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                  Ko'rish
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       )}

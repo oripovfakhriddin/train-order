@@ -1,9 +1,19 @@
 import { Fragment, useEffect, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { BiEditAlt } from "react-icons/bi";
+import { BsPersonPlus } from "react-icons/bs";
 import { RiDeleteBin5Fill } from "react-icons/ri";
+import { toast } from "react-toastify";
 
+import { yupResolver } from "@hookform/resolvers/yup";
+
+import { WAGON_TYPE } from "../../../constants";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { getWagons } from "../../../redux/slices/wagon";
+import wagonSchema from "../../../schema/wagon";
+import request from "../../../server/request";
+import WagonFormValues from "../../../types/wagon";
+import Wagon from "../../../types/wagons";
 
 const AdminWagonsPage = () => {
   const { wagons, loading, total } = useAppSelector((state) => state.wagon);
@@ -11,14 +21,32 @@ const AdminWagonsPage = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [wagonId, setWagonId] = useState<string | null>(null);
+  const [selected, setSelected] = useState<string | null>(null);
+  const [callback, setCallback] = useState(false);
+
+  const refetch = () => {
+    setCallback(!callback);
+  };
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    resetField,
+    formState: { errors },
+  } = useForm<WagonFormValues>({ resolver: yupResolver(wagonSchema) });
 
   useEffect(() => {
     dispatch(getWagons());
-  }, [dispatch]);
+  }, [dispatch, callback]);
 
-  const showEditModal = (id: string) => {
+  const showEditModal = () => {
+    resetField("number");
+    resetField("capacity");
+    resetField("type");
+    resetField("description");
     setIsEditModalOpen(true);
-    setWagonId(id);
+    setSelected(null);
   };
 
   const closeEditModal = () => {
@@ -34,14 +62,65 @@ const AdminWagonsPage = () => {
     setIsDeleteModalOpen(false);
   };
 
-  const deleteWagon = () => {
-    console.log(wagonId);
-    setIsDeleteModalOpen(false);
+  const deleteWagon = async () => {
+    try {
+      const { data } = await request.delete("wagon/delete", {
+        params: {
+          id: wagonId,
+        },
+      });
+      toast.success(data.message);
+      closeDeleteModal();
+      refetch();
+    } finally {
+      closeDeleteModal();
+      refetch();
+    }
+  };
+
+  const editWagon = async (data: Wagon) => {
+    setSelected(data.id);
+
+    setValue("number", data.number, {
+      shouldValidate: true,
+      shouldDirty: true,
+      shouldTouch: true,
+    });
+    setValue("capacity", data.capacity, {
+      shouldValidate: true,
+      shouldDirty: true,
+      shouldTouch: true,
+    });
+    setValue("description", data.description, {
+      shouldValidate: true,
+      shouldDirty: true,
+      shouldTouch: true,
+    });
+    setValue("type", data.type, {
+      shouldValidate: true,
+      shouldDirty: true,
+      shouldTouch: true,
+    });
+
+    setIsEditModalOpen(true);
+  };
+
+  const onSubmit: SubmitHandler<WagonFormValues> = async (values) => {
+    if (selected === null) {
+      const { data } = await request.post(`wagon/save`, values);
+      toast.success(data.message);
+    } else {
+      const { data } = await request.put(`wagon/update-wagon`, values, {
+        params: { id: selected },
+      });
+      toast.success(data.message);
+    }
+    setIsEditModalOpen(false);
+    refetch();
   };
 
   return (
     <Fragment>
-      <h1>Total: {total}</h1>
       {loading ? (
         <div
           id="loading-modal"
@@ -50,9 +129,31 @@ const AdminWagonsPage = () => {
         ></div>
       ) : (
         <section id="wagons">
+          <div className="flex items-center justify-between my-4">
+            <div>
+              <h1 className="text-xl ml-2">Vagonlar</h1>
+            </div>
+            <div>
+              <h4 className="text-sm px-5 py-3 bg-sky-300 rounded-lg">
+                Jami: {total}
+              </h4>
+            </div>
+            <div>
+              <button
+                type="submit"
+                onClick={() => {
+                  showEditModal();
+                }}
+                className="text-white w-full text-center justify-center inline-flex items-center bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5  dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+              >
+                <BsPersonPlus className="h-6 w-6 mr-3" />
+                Qo'shish
+              </button>
+            </div>
+          </div>
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-              <thead className="text-xs text-gray-700  bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <thead className="text-[16px]  text-gray-700  bg-amber-400 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                   <th
                     scope="col"
@@ -83,6 +184,12 @@ const AdminWagonsPage = () => {
                   </th>
                   <th
                     scope="col"
+                    className="px-2 py-1 md:px-4 md:py-3 text-center"
+                  >
+                    Tavsifi
+                  </th>
+                  <th
+                    scope="col"
                     className="px-2 py-1 md:px-4 md:py-3 text-end"
                   >
                     Amallar
@@ -93,7 +200,7 @@ const AdminWagonsPage = () => {
                 {wagons.map((wagon, index) => (
                   <tr
                     key={index}
-                    className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
+                    className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 hover:bg-gray-300 transition-all even:dark:bg-gray-800 border-b dark:border-gray-700"
                   >
                     <th className="px-2 py-1 md:px-4 md:py-3 text-center">
                       {index + 1}.
@@ -111,11 +218,16 @@ const AdminWagonsPage = () => {
                     <td className="px-2 py-1 md:px-4 md:py-3 text-center">
                       {wagon.price}
                     </td>
+                    <td className="px-2 py-1 md:px-4 md:py-3 text-center">
+                      <p content={wagon.description}>
+                        {wagon.description.slice(0, 20)}...
+                      </p>
+                    </td>
                     <td className="px-2 py-1 md:px-4 md:py-3 text-end flex items-center gap-2 justify-end">
                       <button
                         type="button"
                         onClick={() => {
-                          showEditModal(wagon.id);
+                          editWagon(wagon);
                         }}
                         className="focus:outline-none inline-flex items-center justify-between text-white bg-orange-400 hover:bg-orange-500 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-orange-900"
                       >
@@ -224,13 +336,12 @@ const AdminWagonsPage = () => {
             {/* <!-- Modal header --> */}
             <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                Create New Product
+                {selected === null ? "Vagon qo'shish" : "Vagonni tahrirlash"}
               </h3>
               <button
                 type="button"
                 onClick={closeEditModal}
                 className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                data-modal-toggle="crud-modal"
               >
                 <svg
                   className="w-3 h-3"
@@ -241,9 +352,9 @@ const AdminWagonsPage = () => {
                 >
                   <path
                     stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
                   />
                 </svg>
@@ -251,73 +362,102 @@ const AdminWagonsPage = () => {
               </button>
             </div>
             {/* <!-- Modal body --> */}
-            <form className="p-4 md:p-5">
-              <div className="grid gap-4 mb-4 grid-cols-2">
-                <div className="col-span-2">
-                  <label
-                    htmlFor="name"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    id="name"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                    placeholder="Type product name"
-                  />
-                </div>
-                <div className="col-span-2 sm:col-span-1">
-                  <label
-                    htmlFor="price"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Price
-                  </label>
-                  <input
-                    type="number"
-                    name="price"
-                    id="price"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                    placeholder="$2999"
-                  />
-                </div>
-                <div className="col-span-2 sm:col-span-1">
-                  <label
-                    htmlFor="category"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Category
-                  </label>
-                  <select
-                    id="category"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  >
-                    <option>Select category</option>
-                    <option value="TV">TV/Monitors</option>
-                    <option value="PC">PC</option>
-                    <option value="GA">Gaming/Console</option>
-                    <option value="PH">Phones</option>
-                  </select>
-                </div>
-                <div className="col-span-2">
-                  <label
-                    htmlFor="description"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Product Description
-                  </label>
-                  <textarea
-                    id="description"
-                    className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Write product description here"
-                  ></textarea>
-                </div>
+
+            <form
+              autoComplete="off"
+              onSubmit={handleSubmit(onSubmit)}
+              className="flex flex-col p-4"
+            >
+              <div className="mb-4">
+                <label
+                  className="text-[12px] inline-block mb-[6px]"
+                  htmlFor="number"
+                >
+                  Vagon raqami:
+                </label>
+                <input
+                  placeholder="Vagon raqamini kiriting..."
+                  id="number"
+                  {...register("number")}
+                  className="w-full border-solid px-[12px] leading-[1.42857143] text-[14px] py-[10px]  border-[#ccc] 
+                  rounded border-[1px] outline-1 outline-[#b7cff9]"
+                  type="text"
+                />
+                {errors?.number && (
+                  <p className="text-red-500 text-[14px]">
+                    {errors.number.message}
+                  </p>
+                )}
               </div>
+              <div className="mb-4">
+                <label
+                  className="text-[12px] inline-block mb-[6px]"
+                  htmlFor="capacity"
+                >
+                  Vagon hajmi:
+                </label>
+                <input
+                  placeholder="Hajmini kiriting..."
+                  {...register("capacity")}
+                  className="w-full border-solid px-[12px] leading-[1.42857143] text-[14px] py-[10px]  border-[#ccc] 
+                  rounded border-[1px] outline-1 outline-[#b7cff9]"
+                  type="text"
+                />
+                {errors?.capacity && (
+                  <p className="text-red-500 text-[14px]">
+                    {errors.capacity.message}
+                  </p>
+                )}
+              </div>
+
+              <div className="mb-4">
+                <label
+                  className="text-[12px] inline-block mb-[6px]"
+                  htmlFor="username"
+                >
+                  Vagon turi:
+                </label>
+                <select
+                  {...register("type")}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
+                  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 
+                  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
+                   dark:focus:border-blue-500"
+                >
+                  {WAGON_TYPE.map((wagon, index) => (
+                    <option key={index} value={wagon}>{wagon}</option>
+                  ))}
+                </select>
+                {errors?.type && (
+                  <p className="text-red-500 text-[14px]">
+                    {errors.type.message}
+                  </p>
+                )}
+              </div>
+
+              <div className="mb-4">
+                <label
+                  className="text-[12px] inline-block mb-[6px]"
+                  htmlFor="description"
+                >
+                  Vagon haqida:
+                </label>
+                <textarea
+                  placeholder="Vagon haqida ma'lumot kiriting..."
+                  {...register("description")}
+                  className="w-full border-solid px-[12px] leading-[1.42857143] text-[14px] py-[10px]  border-[#ccc] 
+                  rounded border-[1px] outline-1 outline-[#b7cff9]"
+                />
+                {errors?.description && (
+                  <p className="text-red-500 text-[14px]">
+                    {errors.description.message}
+                  </p>
+                )}
+              </div>
+
               <button
                 type="submit"
-                className="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                className="text-white inline-flex items-center justify-center w-full  bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
               >
                 <svg
                   className="me-1 -ms-1 w-5 h-5"
@@ -326,12 +466,16 @@ const AdminWagonsPage = () => {
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    fill-rule="evenodd"
+                    fillRule="evenodd"
                     d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                    clip-rule="evenodd"
+                    clipRule="evenodd"
                   ></path>
                 </svg>
-                Tahrirlash
+                {loading
+                  ? "Kutilmoqda"
+                  : selected === null
+                  ? "Qo'shish"
+                  : "Tahrirlash"}
               </button>
             </form>
           </div>

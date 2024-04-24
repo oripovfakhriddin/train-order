@@ -27,6 +27,8 @@ const AdminUsersPage = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [callback, setCallback] = useState(false);
 
+  const allUsers = users.filter((user) => user.role !== "ADMIN");
+
   const refetch = () => {
     setCallback(!callback);
   };
@@ -138,8 +140,9 @@ const AdminUsersPage = () => {
         <section id="users">
           <div className="flex items-center justify-between">
             <div>
-              <h1>Total: {total}</h1>
+              <h1 className="text-xl ml-2">Foydalanuvchilar</h1>
             </div>
+
             <div className="mb-4">
               <label
                 className="text-[12px] inline-block mb-[6px]"
@@ -171,6 +174,11 @@ const AdminUsersPage = () => {
               />
             </div>
             <div>
+              <h4 className="text-sm px-5 py-3 bg-sky-300 rounded-lg">
+                Jami: {total}
+              </h4>
+            </div>
+            <div>
               <button
                 type="submit"
                 onClick={() => {
@@ -185,7 +193,7 @@ const AdminUsersPage = () => {
           </div>
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-              <thead className="text-xs text-gray-700  bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <thead className="text-[16px] text-gray-700  bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                   <th scope="col" className="px-6 py-3">
                     #
@@ -211,10 +219,10 @@ const AdminUsersPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {users.map((user, index) => (
+                {allUsers.map((user, index) => (
                   <tr
                     key={index}
-                    className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
+                    className="odd:bg-white odd:dark:bg-gray-900 hover:bg-gray-300 transition-all even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
                   >
                     <th className="px-6 py-4">{index + 1}.</th>
                     <td className="px-6 py-4">{user.fullName}</td>

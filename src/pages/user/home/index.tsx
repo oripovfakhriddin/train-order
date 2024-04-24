@@ -5,9 +5,14 @@ const HomePage = () => {
   const settings = {
     dots: true,
     infinite: true,
-    speed: 500,
+    speed: 2000,
     slidesToShow: 1,
+    autoPlay: true,
+    autoPlaySpeed: 3000,
     slidesToScroll: 1,
+    pauseOnHover: true,
+    centerMode: true,
+    cssEase: "linear",
   };
 
   return (

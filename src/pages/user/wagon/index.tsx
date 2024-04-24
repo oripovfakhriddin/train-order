@@ -25,6 +25,7 @@ const UserWagonPage = () => {
   const {
     register,
     handleSubmit,
+    resetField,
     formState: { errors },
   } = useForm<OrderFormValues>({
     resolver: yupResolver(orderSchema),
@@ -55,6 +56,7 @@ const UserWagonPage = () => {
       dataOrder.fromWhere !== dataOrder.toWhere
     ) {
       const { data } = await request.post("/order/save", dataOrder);
+      closeModal();
       toast.success(data.message);
       refetch();
     } else {
@@ -63,6 +65,12 @@ const UserWagonPage = () => {
   };
 
   const showModal = (id: string) => {
+    resetField("endTimeDate");
+    resetField("endTimeDay");
+    resetField("fromWhere");
+    resetField("startTimeDate");
+    resetField("startTimeDay");
+    resetField("toWhere");
     setIsModalOpen(true);
     setWagonId(id);
   };
@@ -176,6 +184,12 @@ const UserWagonPage = () => {
                     </th>
                     <th
                       scope="col"
+                      className="px-2 py-1 md:px-4 md:py-3 text-center "
+                    >
+                      Tarifi
+                    </th>
+                    <th
+                      scope="col"
                       className="px-2 py-1 md:px-4 md:py-3 text-end"
                     >
                       Amallar
@@ -206,6 +220,9 @@ const UserWagonPage = () => {
                       </td>
                       <th className="px-2 py-1 md:px-4 md:py-3 text-center">
                         {wagon.price}
+                      </th>
+                      <th className="px-2 py-1 md:px-4 md:py-3 text-center">
+                        {wagon.description.slice(0, 30)}
                       </th>
                       <td className="px-2 py-1 md:px-4 md:py-3 text-end flex items-center gap-2 justify-end">
                         <button
@@ -319,8 +336,8 @@ const UserWagonPage = () => {
                     {...register("fromWhere")}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   >
-                    {TRAIN_STATION.map((station) => (
-                      <option value={station}>{station}</option>
+                    {TRAIN_STATION.map((station, index) => (
+                      <option key={index} value={station}>{station}</option>
                     ))}
                   </select>
                   {errors?.fromWhere && (
@@ -340,8 +357,8 @@ const UserWagonPage = () => {
                     {...register("toWhere")}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   >
-                    {TRAIN_STATION.map((station) => (
-                      <option value={station}>{station}</option>
+                    {TRAIN_STATION.map((station, index) => (
+                      <option key={index} value={station}>{station}</option>
                     ))}
                   </select>
                   {errors?.toWhere && (

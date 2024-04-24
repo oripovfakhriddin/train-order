@@ -159,7 +159,7 @@ const LoginPage = () => {
             </div>
             <div className="flex mt-4 items-center justify-center gap-3">
               <Link
-                to="/register"
+                to="https://t.me/HK34_7"
                 className="text-[#1D2D5B] underline decoration-solid
                 transition-all duration-500
                 hover:text-red-600
