@@ -78,7 +78,6 @@ const MySingleOrderPage = () => {
         fromWhere: values.fromWhere,
         toWhere: values.toWhere,
       };
-      console.log(orderData?.createdBy);
       if (
         dataOrder.startTime !== dataOrder.endTime &&
         dataOrder.fromWhere !== dataOrder.toWhere
@@ -91,8 +90,9 @@ const MySingleOrderPage = () => {
           }
         );
         setEditLoading(false);
-        toast.success(data.message);
+        closeEditModal();
         refetch();
+        toast.success(data.message);
       } else {
         toast.error("Siz kiritga qiymatlarda xatolik mavjud");
       }
@@ -110,10 +110,11 @@ const MySingleOrderPage = () => {
         { orderUserId },
         { params: { id: orderUserId } }
       );
-      setCancelLoading(false);
       if (data.status === "SUCCESS") {
-        toast.info(data.message);
+        setCancelLoading(false);
+        closeCancelModal();
         refetch();
+        toast.success(data.message);
       }
       refetch();
     } finally {
@@ -178,7 +179,7 @@ const MySingleOrderPage = () => {
         <div
           id="crud-modal"
           aria-hidden="true"
-          className={`flex overflow-y-auto backdrop-blur overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full`}
+          className={`flex overflow-y-auto backdrop-blur overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full inset-0 h-[calc(100%-1rem)] max-h-full`}
         ></div>
       ) : (
         orderData && (
@@ -389,7 +390,7 @@ const MySingleOrderPage = () => {
         className={`${
           isEditModalOpen ? "flex" : "hidden"
         } backdrop-blur overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 
-        justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full`}
+        justify-center items-center w-full inset-0 h-[calc(100%-1rem)] max-h-full`}
       >
         <div className="relative p-4 w-full max-w-md max-h-full">
           <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">

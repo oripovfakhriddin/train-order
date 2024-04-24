@@ -75,15 +75,16 @@ const AdminOrdersPage = () => {
         { orderId },
         { params: { id: orderId } }
       );
-      setIsCancelModalOpen(false);
       setCancelLoading(false);
+      setIsCancelModalOpen(false);
       if (data.status === "SUCCESS") {
-        toast.success(data.message);
+        setCancelLoading(false);
+        setIsCancelModalOpen(false);
         refetch();
+        toast.success(data.message);
       }
     } finally {
       setCancelLoading(false);
-      refetch();
     }
   };
 
@@ -92,9 +93,9 @@ const AdminOrdersPage = () => {
       params: { id: orderId },
     });
     if (data.status === "SUCCESS") {
-      toast.success(data.data);
       closeDeleteModal();
       refetch();
+      toast.success(data.data);
     }
   };
 
@@ -165,9 +166,9 @@ const AdminOrdersPage = () => {
         if (selected === null) {
           const { data } = await request.post("/order/save", dataOrder);
           setEditLoading(false);
-          toast.success(data.message);
           closeEditModal();
           refetch();
+          toast.success(data.message);
         } else {
           const { data } = await request.put(
             "/order/change-order-time",
@@ -177,16 +178,15 @@ const AdminOrdersPage = () => {
             }
           );
           setEditLoading(false);
-          toast.success(data.message);
           closeEditModal();
+          refetch();
+          toast.success(data.message);
         }
       } else {
         toast.error("Siz kiritga qiymatlarda xatolik mavjud");
       }
-      refetch();
     } finally {
       setEditLoading(false);
-      refetch();
     }
   };
 

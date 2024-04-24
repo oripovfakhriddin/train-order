@@ -34,12 +34,16 @@ const AdminCanceledOrdersPage = () => {
   };
 
   const deleteOrder = async () => {
-    const { data } = await request.delete(`order/delete`, {
-      params: { id: orderId },
-    });
-    if (data.status === "SUCCESS") {
-      toast.success(data.data);
-      closeDeleteModal();
+    try {
+      const { data } = await request.delete(`order/delete`, {
+        params: { id: orderId },
+      });
+      if (data.status === "SUCCESS") {
+        closeDeleteModal();
+        refetch();
+        toast.success(data.data);
+      }
+    } finally {
       refetch();
     }
   };

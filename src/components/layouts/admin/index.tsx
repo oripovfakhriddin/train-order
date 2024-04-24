@@ -151,7 +151,7 @@ const AdminLayout = () => {
       <div
         className={`${
           openModal ? "flex" : "hidden"
-        } fixed backdrop-blur top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0  max-h-full`}
+        } fixed backdrop-blur top-0 right-0 left-0 z-50 justify-center items-center w-full inset-0  max-h-full`}
       >
         <div className="relative p-4 w-full max-w-md max-h-full">
           <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">

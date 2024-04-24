@@ -31,7 +31,6 @@ const RegisterPage = () => {
     try {
       setLoading(true);
       const { data } = await axios.post(`${ENDPOINT}auth/sign-up`, values);
-      console.log(data);
       Cookies.set(TOKEN, data.token);
       localStorage.setItem(USER, JSON.stringify(values));
       toast.success(data.message);

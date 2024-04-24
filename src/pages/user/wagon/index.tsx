@@ -21,6 +21,7 @@ const UserWagonPage = () => {
   const [callback, setCallback] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [wagonId, setWagonId] = useState<string | null>(null);
+  const [isOrderLoading, setIsOrderLoading] = useState(false);
 
   const {
     register,
@@ -32,35 +33,41 @@ const UserWagonPage = () => {
   });
 
   const onSubmit: SubmitHandler<OrderFormValues> = async (values) => {
-    const startDateObjectDay = new Date(values.startTimeDay);
-    const endDateObjectDay = new Date(values.endTimeDay);
+    try {
+      setIsOrderLoading(true);
+      const startDateObjectDay = new Date(values.startTimeDay);
+      const endDateObjectDay = new Date(values.endTimeDay);
 
-    const d1 =
-      startDateObjectDay.toISOString().split("T")[0] +
-      "T" +
-      values.startTimeDate;
+      const d1 =
+        startDateObjectDay.toISOString().split("T")[0] +
+        "T" +
+        values.startTimeDate;
 
-    const d2 =
-      endDateObjectDay.toISOString().split("T")[0] + "T" + values.endTimeDate;
+      const d2 =
+        endDateObjectDay.toISOString().split("T")[0] + "T" + values.endTimeDate;
 
-    const dataOrder = {
-      startTime: d1,
-      endTime: d2,
-      wagonId: wagonId,
-      fromWhere: values.fromWhere,
-      toWhere: values.toWhere,
-    };
+      const dataOrder = {
+        startTime: d1,
+        endTime: d2,
+        wagonId: wagonId,
+        fromWhere: values.fromWhere,
+        toWhere: values.toWhere,
+      };
 
-    if (
-      dataOrder.startTime !== dataOrder.endTime &&
-      dataOrder.fromWhere !== dataOrder.toWhere
-    ) {
-      const { data } = await request.post("/order/save", dataOrder);
-      closeModal();
-      toast.success(data.message);
-      refetch();
-    } else {
-      toast.error("Siz kiritga qiymatlarda xatolik mavjud");
+      if (
+        dataOrder.startTime !== dataOrder.endTime &&
+        dataOrder.fromWhere !== dataOrder.toWhere
+      ) {
+        const { data } = await request.post("/order/save", dataOrder);
+        setIsOrderLoading(false);
+        closeModal();
+        refetch();
+        toast.success(data.message);
+      } else {
+        toast.error("Siz kiritga qiymatlarda xatolik mavjud");
+      }
+    } finally {
+      setIsOrderLoading(false);
     }
   };
 
@@ -91,7 +98,7 @@ const UserWagonPage = () => {
     <Fragment>
       {!isAuthenticated ? (
         <div
-          className={`flex fixed backdrop-blur top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0  max-h-full`}
+          className={`flex fixed backdrop-blur top-0 right-0 left-0 z-50 justify-center items-center w-full inset-0  max-h-full`}
         >
           <div className="relative p-4 w-full max-w-md max-h-full">
             <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -139,7 +146,7 @@ const UserWagonPage = () => {
         <div
           id="crud-modal"
           aria-hidden="true"
-          className={`flex overflow-y-auto backdrop-blur overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full`}
+          className={`flex overflow-y-auto backdrop-blur overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full inset-0 h-[calc(100%-1rem)] max-h-full`}
         ></div>
       ) : (
         <section id="wagons">
@@ -251,7 +258,7 @@ const UserWagonPage = () => {
         className={`${
           isModalOpen ? "flex" : "hidden"
         } backdrop-blur overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 
-        justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full`}
+        justify-center items-center w-full inset-0 h-[calc(100%-1rem)] max-h-full`}
       >
         <div className="relative p-4 w-full max-w-md max-h-full">
           <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -410,7 +417,7 @@ const UserWagonPage = () => {
                 className="text-white inline-flex w-full items-center justify-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
                 <IoIosCreate className="me-2 w-6 h-6" />
-                Vagonni band qilish
+                {isOrderLoading ? "Kutilmoqda..." : "Vagonni band qilish"}
               </button>
             </form>
           </div>

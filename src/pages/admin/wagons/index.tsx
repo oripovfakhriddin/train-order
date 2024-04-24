@@ -74,7 +74,6 @@ const AdminWagonsPage = () => {
       refetch();
     } finally {
       closeDeleteModal();
-      refetch();
     }
   };
 
@@ -106,17 +105,21 @@ const AdminWagonsPage = () => {
   };
 
   const onSubmit: SubmitHandler<WagonFormValues> = async (values) => {
-    if (selected === null) {
-      const { data } = await request.post(`wagon/save`, values);
-      toast.success(data.message);
-    } else {
-      const { data } = await request.put(`wagon/update-wagon`, values, {
-        params: { id: selected },
-      });
-      toast.success(data.message);
+    try {
+      if (selected === null) {
+        const { data } = await request.post(`wagon/save`, values);
+        toast.success(data.message);
+      } else {
+        const { data } = await request.put(`wagon/update-wagon`, values, {
+          params: { id: selected },
+        });
+        toast.success(data.message);
+      }
+      setIsEditModalOpen(false);
+      refetch();
+    } finally {
+      closeEditModal();
     }
-    setIsEditModalOpen(false);
-    refetch();
   };
 
   return (
@@ -257,7 +260,7 @@ const AdminWagonsPage = () => {
       <div
         className={`${
           isDeleteModalOpen ? "flex" : "hidden"
-        } fixed backdrop-blur top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0  max-h-full`}
+        } fixed backdrop-blur top-0 right-0 left-0 z-50 justify-center items-center w-full inset-0  max-h-full`}
       >
         <div className="relative p-4 w-full max-w-md max-h-full">
           <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -328,7 +331,7 @@ const AdminWagonsPage = () => {
         aria-hidden="true"
         className={`${
           isEditModalOpen ? "flex" : "hidden"
-        } overflow-y-auto backdrop-blur overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full`}
+        } overflow-y-auto backdrop-blur overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full inset-0 h-[calc(100%-1rem)] max-h-full`}
       >
         <div className="relative p-4 w-full max-w-md max-h-full">
           {/* <!-- Modal content --> */}

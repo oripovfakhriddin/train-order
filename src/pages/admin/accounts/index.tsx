@@ -60,14 +60,18 @@ const AdminAccountsPage = () => {
   };
 
   const onSubmit: SubmitHandler<RegisterFormValues> = async (values) => {
-    setEditLoading(true);
-    const { data } = await request.put(`user/update-profile`, values, {
-      params: { id: Cookies.get(USER_ID) },
-    });
-    setEditLoading(false);
-    toast.success(data.message);
-    setIsEditModalOpen(false);
-    refetch();
+    try {
+      setEditLoading(true);
+      const { data } = await request.put(`user/update-profile`, values, {
+        params: { id: Cookies.get(USER_ID) },
+      });
+      setEditLoading(false);
+      setIsEditModalOpen(false);
+      refetch();
+      toast.success(data.message);
+    } finally {
+      setEditLoading(false);
+    }
   };
 
   const logOutFunction = () => {
@@ -210,7 +214,7 @@ const AdminAccountsPage = () => {
         aria-hidden="true"
         className={`${
           isEditModalOpen ? "flex" : "hidden"
-        } overflow-y-auto backdrop-blur overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full`}
+        } overflow-y-auto backdrop-blur overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full inset-0 h-[calc(100%-1rem)] max-h-full`}
       >
         <div className="relative p-4 w-full max-w-md max-h-full">
           {/* <!-- Modal content --> */}
@@ -391,7 +395,7 @@ const AdminAccountsPage = () => {
       <div
         className={`${
           openLogOutModal ? "flex" : "hidden"
-        } fixed backdrop-blur top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0  max-h-full`}
+        } fixed backdrop-blur top-0 right-0 left-0 z-50 justify-center items-center w-full inset-0  max-h-full`}
       >
         <div className="relative p-4 w-full max-w-md max-h-full">
           <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">

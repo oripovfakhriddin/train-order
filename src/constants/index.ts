@@ -29,6 +29,7 @@ const TRAIN_STATION = [
   "Pakhtakor",
   "Chimkurgan",
   "Chukursay",
+  "Buxoro"
 ];
 
 const WAGON_TYPE = [
