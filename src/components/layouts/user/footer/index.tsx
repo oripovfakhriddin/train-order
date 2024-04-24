@@ -6,7 +6,7 @@ const Footer = () => {
       <footer className="bg-dark-purple py-3">
         <div className="container">
           <h1 className="text-center text-white">
-            Copyright © 2024 of Oripov Fakhriddin
+            Copyright © 2024 of Nazarova Sevinch
           </h1>
         </div>
       </footer>

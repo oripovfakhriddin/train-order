@@ -16,7 +16,7 @@ const HomePage = () => {
   const settings = {
     slidesToScroll: 1,
     slidesToShow: 2,
-    speed: 3000,
+    speed: 500,
     autoplaySpeed: 7000,
     dots: true,
     infinite: true,

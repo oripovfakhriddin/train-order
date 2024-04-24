@@ -12,7 +12,6 @@ import { toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Cookies from "js-cookie";
 
-import BackgroundImage from "../../../assets/home-2.jpg";
 import CompanyIcon from "../../../components/icons-svg/company";
 import { TOKEN, USER, USER_ID } from "../../../constants";
 import { AuthContext } from "../../../context/auth";
@@ -123,13 +122,9 @@ const UserAccountPage = () => {
           className={`flex overflow-y-auto backdrop-blur overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full`}
         ></div>
       ) : (
-        <section
-          style={{ backgroundImage: `url(${BackgroundImage})` }}
-          className="bg-no-repeat bg-cover"
-          id="account"
-        >
+        <section className="bg-no-repeat bg-cover" id="account">
           <div className="container">
-            <h1 className="text-xl sm:text-4xl text-white text-center py-4">
+            <h1 className="text-xl sm:text-4xl text-center py-4">
               Mening Profilim
             </h1>
             <div>

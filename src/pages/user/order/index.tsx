@@ -32,7 +32,7 @@ const UserOrderPage = () => {
             </div>
 
             {total !== 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-7">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-7 mb-5">
                 {usersOrders.map((order, index) => (
                   <UserOrdersCard key={index} {...order} index={index} />
                 ))}

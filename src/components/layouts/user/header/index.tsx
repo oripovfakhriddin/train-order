@@ -53,7 +53,7 @@ const Header = () => {
             <span className="text-3xl text-indigo-600 mr-1 pt-2"></span>
             <Link to="/" className="flex gap-2 items-center">
               <img className="w-10" src={VagonLogo} alt="Train image" />
-              <span className="text-gray-300">Vagron buyurtmasi</span>
+              <span className="text-gray-300">Vagon buyurtmasi</span>
             </Link>
           </div>
 

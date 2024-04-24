@@ -28,7 +28,7 @@ const UserOrdersCard = ({
   return (
     <Fragment>
       <div
-        className={` p-2 hover:-translate-y-6 transition-[300ms] sm:p-4 md:p-6 relative  border-gray-200 border ${
+        className={` p-2 hover:-translate-y-6  hover:bg-blue-300 transition-[300ms] sm:p-4 md:p-6 relative  border-gray-200 border ${
           cancel ? "bg-red-300" : "bg-blue-200"
         } rounded-lg shadow dark:bg-gray-800 dark:border-gray-700`}
       >

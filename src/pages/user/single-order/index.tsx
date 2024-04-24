@@ -17,8 +17,12 @@ import request from "../../../server/request";
 import OrderFormValues from "../../../types/order";
 import UserOrdersTypes from "../../../types/user-orders";
 
+interface UserOrderTypes extends UserOrdersTypes {
+  type: string;
+}
+
 const MySingleOrderPage = () => {
-  const [orderData, setOrderData] = useState<UserOrdersTypes | null>(null);
+  const [orderData, setOrderData] = useState<UserOrderTypes | null>(null);
 
   const {
     register,
@@ -111,6 +115,7 @@ const MySingleOrderPage = () => {
         toast.info(data.message);
         refetch();
       }
+      refetch();
     } finally {
       setCancelLoading(false);
       refetch();
@@ -237,6 +242,11 @@ const MySingleOrderPage = () => {
                 <div className="flex items-center justify-between gap-3 mb-2">
                   <p>Qayerga: </p>
                   <p>{orderData?.toWhere}</p>
+                </div>
+                <hr />
+                <div className="flex items-center justify-between gap-3 mb-2">
+                  <p>Turi: </p>
+                  <p>{orderData?.type}</p>
                 </div>
                 <hr />
                 <div className="flex items-center justify-between gap-3 mb-2">
@@ -458,8 +468,10 @@ const MySingleOrderPage = () => {
                     {...register("fromWhere")}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   >
-                    {TRAIN_STATION.map((station) => (
-                      <option value={station}>{station}</option>
+                    {TRAIN_STATION.map((station, index) => (
+                      <option key={index} value={station}>
+                        {station}
+                      </option>
                     ))}
                   </select>
                   {errors?.fromWhere && (
@@ -479,8 +491,10 @@ const MySingleOrderPage = () => {
                     {...register("toWhere")}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   >
-                    {TRAIN_STATION.map((station) => (
-                      <option value={station}>{station}</option>
+                    {TRAIN_STATION.map((station, index) => (
+                      <option key={index} value={station}>
+                        {station}
+                      </option>
                     ))}
                   </select>
                   {errors?.toWhere && (

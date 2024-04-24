@@ -106,11 +106,7 @@ const AdminUsersPage = () => {
       shouldDirty: true,
       shouldTouch: true,
     });
-    setValue("password", "12345", {
-      shouldValidate: true,
-      shouldDirty: true,
-      shouldTouch: true,
-    });
+    setValue("password", "", {});
     setIsEditModalOpen(true);
   };
 
@@ -143,7 +139,6 @@ const AdminUsersPage = () => {
               <h1 className="text-xl ml-2">Foydalanuvchilar</h1>
             </div>
 
-            
             <div>
               <h4 className="text-sm px-5 py-3 bg-sky-300 rounded-lg">
                 Jami: {total}
