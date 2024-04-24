@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Cookies from "js-cookie";
 
+import BackgroundImage from "../../../assets/home-2.jpg";
 import CompanyIcon from "../../../components/icons-svg/company";
 import { TOKEN, USER, USER_ID } from "../../../constants";
 import { AuthContext } from "../../../context/auth";
@@ -49,8 +50,6 @@ const UserAccountPage = () => {
   const controlLogOutModal = () => {
     setOpenLogOutModal(!openLogOutModal);
   };
-
- 
 
   const getUserData = async () => {
     setLoading(false);
@@ -111,12 +110,9 @@ const UserAccountPage = () => {
     setIsEditModalOpen(true);
   };
 
-
   useEffect(() => {
     getUserData();
   }, [callback]);
-
-  console.log(userData);
 
   return (
     <Fragment>
@@ -127,13 +123,17 @@ const UserAccountPage = () => {
           className={`flex overflow-y-auto backdrop-blur overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full`}
         ></div>
       ) : (
-        <section id="account">
+        <section
+          style={{ backgroundImage: `url(${BackgroundImage})` }}
+          className="bg-no-repeat bg-cover"
+          id="account"
+        >
           <div className="container">
-            <h1 className="text-xl sm:text-4xl text-center my-2">
+            <h1 className="text-xl sm:text-4xl text-white text-center py-4">
               Mening Profilim
             </h1>
             <div>
-              <div className="md:grid grid-cols-4 grid-rows-2  bg-white gap-2 p-1 sm:p-4 rounded-xl">
+              <div className="md:grid grid-cols-4 grid-rows-2 backdrop-blur-[4px]  gap-2 p-1 sm:p-4 rounded-xl">
                 <div className="md:col-span-1  shadow-xl ">
                   <div className="flex w-full h-full relative">
                     {userData?.gender === "MALE" ? (
@@ -187,17 +187,6 @@ const UserAccountPage = () => {
                     </p>
                   </div>
                 </div>
-                <div className="md:col-span-4 shadow-xl p-4 space-y-2  md:block">
-                  <h3 className="font-bold uppercase"> Profile Description</h3>
-                  <p className="">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Mauris eget laoreet diam, id luctus lectus. Ut consectetur
-                    nisl ipsum, et faucibus sem finibus vitae. Maecenas aliquam
-                    dolor at dignissim commodo. Etiam a aliquam tellus, et
-                    suscipit dolor. Proin auctor nisi velit, quis aliquet sapien
-                    viverra a.
-                  </p>
-                </div>
               </div>
               <div className="flex items-center justify-between flex-col sm:flex-row gap-4 p-1 sm:p-4">
                 <button
@@ -211,7 +200,7 @@ const UserAccountPage = () => {
                 <button
                   type="button"
                   onClick={controlLogOutModal}
-                  className="focus:outline-none w-full inline-flex items-center justify-center text-white bg-orange-400 hover:bg-orange-500 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5  dark:focus:ring-orange-900"
+                  className="focus:outline-none w-full inline-flex items-center justify-center text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5  dark:focus:ring-red-900"
                 >
                   <BiLogOut className="h-6 w-6 mr-2" />
                   Chiqish

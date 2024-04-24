@@ -6,7 +6,6 @@ import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import { FcBusinessman } from "react-icons/fc";
 import { FcBusinesswoman } from "react-icons/fc";
-import { RiDeleteBin5Fill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -35,7 +34,6 @@ const AdminAccountsPage = () => {
   const [userData, setUserData] = useState<User | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [openLogOutModal, setOpenLogOutModal] = useState(false);
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [openPassword, setOpenPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [editLoading, setEditLoading] = useState(false);
@@ -50,10 +48,6 @@ const AdminAccountsPage = () => {
 
   const controlLogOutModal = () => {
     setOpenLogOutModal(!openLogOutModal);
-  };
-
-  const controlDeleteModal = () => {
-    setOpenDeleteModal(!openDeleteModal);
   };
 
   const getUserData = async () => {
@@ -119,8 +113,6 @@ const AdminAccountsPage = () => {
     getUserData();
   }, [callback]);
 
-  console.log(userData);
-
   return (
     <Fragment>
       {loading ? (
@@ -134,7 +126,7 @@ const AdminAccountsPage = () => {
           <div className="container">
             <h1 className="text-xl sm:text-4xl text-center">Mening Profilim</h1>
             <div>
-              <div className="md:grid grid-cols-4 grid-rows-2  bg-white gap-2 p-1 sm:p-4 rounded-xl">
+              <div className="md:grid grid-cols-4  bg-white gap-2 p-1 sm:p-4 rounded-xl">
                 <div className="md:col-span-1  shadow-xl ">
                   <div className="flex w-full h-full relative">
                     {userData?.gender === "MALE" ? (
@@ -188,17 +180,6 @@ const AdminAccountsPage = () => {
                     </p>
                   </div>
                 </div>
-                <div className="md:col-span-4 shadow-xl p-4 space-y-2  md:block">
-                  <h3 className="font-bold uppercase"> Profile Description</h3>
-                  <p className="">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Mauris eget laoreet diam, id luctus lectus. Ut consectetur
-                    nisl ipsum, et faucibus sem finibus vitae. Maecenas aliquam
-                    dolor at dignissim commodo. Etiam a aliquam tellus, et
-                    suscipit dolor. Proin auctor nisi velit, quis aliquet sapien
-                    viverra a.
-                  </p>
-                </div>
               </div>
               <div className="flex items-center justify-between flex-col sm:flex-row gap-4 p-1 sm:p-4">
                 <button
@@ -212,17 +193,10 @@ const AdminAccountsPage = () => {
                 <button
                   type="button"
                   onClick={controlLogOutModal}
-                  className="focus:outline-none w-full inline-flex items-center justify-center text-white bg-orange-400 hover:bg-orange-500 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5  dark:focus:ring-orange-900"
+                  className="focus:outline-none w-full inline-flex items-center justify-center text-white bg-red-500 hover:bg-red-500 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5  dark:focus:ring-red-900"
                 >
                   <BiLogOut className="h-6 w-6 mr-2" />
                   Chiqish
-                </button>
-                <button
-                  onClick={controlDeleteModal}
-                  className="focus:outline-none w-full inline-flex items-center justify-center text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5   dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                >
-                  <RiDeleteBin5Fill className="h-6 w-6  mr-2" />
-                  O'chirish
                 </button>
               </div>
             </div>
@@ -460,7 +434,7 @@ const AdminAccountsPage = () => {
                 />
               </svg>
               <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                Hisobingizdan chiqishni tasdiqlaysizmi?
+                Profilingizdan chiqishni tasdiqlaysizmi?
               </h3>
               <button
                 onClick={logOutFunction}

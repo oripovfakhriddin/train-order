@@ -15,12 +15,15 @@ const initialState: initialStateTypes = {
   total: 0,
 };
 
-export const getCancelOrders = createAsyncThunk("wagons/fetching", async () => {
-  const { data } = await request.get("order/get-canceled-orders");
-  return data;
-});
+export const getCancelOrders = createAsyncThunk(
+  "cancelOrders/fetching",
+  async () => {
+    const { data } = await request.get("order/get-canceled-orders");
+    return data;
+  }
+);
 
-export const wagonSlice = createSlice({
+export const cancelOrderSlice = createSlice({
   initialState,
   name: "cancelOrders",
   reducers: {
@@ -47,8 +50,9 @@ export const wagonSlice = createSlice({
   },
 });
 
-const { reducer: cancelOrdersReducer, name: cancelOrdersName } = wagonSlice;
+const { reducer: cancelOrdersReducer, name: cancelOrdersName } =
+  cancelOrderSlice;
 
-const { controlLoading } = wagonSlice.actions;
+const { controlLoading } = cancelOrderSlice.actions;
 
 export { cancelOrdersReducer as default, cancelOrdersName, controlLoading };

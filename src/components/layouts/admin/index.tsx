@@ -34,18 +34,23 @@ const AdminLayout = () => {
       to: "dashboard",
     },
     {
-      title: "Users",
+      title: "Foydalanuvchilar",
       src: <BiSolidUserDetail className="h-6 w-6" />,
       to: "users",
     },
     {
-      title: "Orders ",
+      title: "Buyurtmalar",
       src: <FaTableList className="h-6 w-6" />,
       to: "orders",
     },
-    { title: "Wagons ", src: <BiTrain className="h-6 w-6" />, to: "wagons" },
     {
-      title: "Accounts",
+      title: "Bekor qilingan buyurtmalar",
+      src: <FaTableList className="h-6 w-6 text-red-500" />,
+      to: "canceled-orders",
+    },
+    { title: "Vagonlar ", src: <BiTrain className="h-6 w-6" />, to: "wagons" },
+    {
+      title: "Profil",
       src: <FaRegUserCircle className="h-6 w-6" />,
       to: "accounts",
     },
@@ -127,7 +132,7 @@ const AdminLayout = () => {
                 <span
                   className={`${!open && "hidden"} origin-left duration-200`}
                 >
-                  {"Log out"}
+                  {"Profildan chiqish"}
                 </span>
               </button>
             </li>
@@ -189,7 +194,7 @@ const AdminLayout = () => {
                 />
               </svg>
               <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                Hisobingizdan chiqishni tasdiqlaysizmi?
+                Profilingizdan chiqishni tasdiqlaysizmi?
               </h3>
               <button
                 onClick={logOutFunction}

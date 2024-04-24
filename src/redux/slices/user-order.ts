@@ -29,7 +29,7 @@ export const getUsersOrders = createAsyncThunk(
   }
 );
 
-export const userSlice = createSlice({
+export const userOrdersSlice = createSlice({
   initialState,
   name: "userOrders",
   reducers: {
@@ -56,8 +56,8 @@ export const userSlice = createSlice({
   },
 });
 
-const { reducer: usersOrderReducer, name: userOrdersName } = userSlice;
+const { reducer: usersOrderReducer, name: userOrdersName } = userOrdersSlice;
 
-const { controlLoading } = userSlice.actions;
+const { controlLoading } = userOrdersSlice.actions;
 
 export { usersOrderReducer as default, userOrdersName, controlLoading };

@@ -177,9 +177,13 @@ const MySingleOrderPage = () => {
         ></div>
       ) : (
         orderData && (
-          <section>
+          <section className="mb-4">
             <div className="container flex flex-col items-center mt-4">
-              <div className=" p-2 sm:p-4 md:p-6 max-w-[800px] w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+              <div
+                className={`${
+                  orderData.cancel ? "bg-red-300" : "bg-white"
+                } p-2 sm:p-4 md:p-6 max-w-[800px] w-full  border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700`}
+              >
                 <div className="flex items-center justify-between gap-3 mb-2">
                   <p>Kim tomonidan: </p>
                   <p>{orderData?.owner.fullName} </p>

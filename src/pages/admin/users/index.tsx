@@ -138,41 +138,12 @@ const AdminUsersPage = () => {
         ></div>
       ) : (
         <section id="users">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between my-2 mb-4">
             <div>
               <h1 className="text-xl ml-2">Foydalanuvchilar</h1>
             </div>
 
-            <div className="mb-4">
-              <label
-                className="text-[12px] inline-block mb-[6px]"
-                htmlFor="emailSearch"
-              >
-                Email
-              </label>
-              <input
-                placeholder="Email entry"
-                id="emailSearch"
-                className="w-full border-solid px-[12px] leading-[1.42857143] text-[14px] py-[10px]  border-[#ccc] 
-                  rounded border-[1px] outline-1 outline-[#b7cff9]"
-                type="text"
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                className="text-[12px] inline-block mb-[6px]"
-                htmlFor="numberSearch"
-              >
-                Number
-              </label>
-              <input
-                placeholder="+998900000000"
-                id="numberSearch"
-                className="w-full border-solid px-[12px] leading-[1.42857143] text-[14px] py-[10px]  border-[#ccc] 
-                  rounded border-[1px] outline-1 outline-[#b7cff9]"
-                type="text"
-              />
-            </div>
+            
             <div>
               <h4 className="text-sm px-5 py-3 bg-sky-300 rounded-lg">
                 Jami: {total}
@@ -193,7 +164,7 @@ const AdminUsersPage = () => {
           </div>
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-              <thead className="text-[16px] text-gray-700  bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <thead className="text-[16px] text-gray-700  bg-blue-400 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                   <th scope="col" className="px-6 py-3">
                     #

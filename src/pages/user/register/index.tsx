@@ -9,7 +9,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-import LogoWagon from "../../../assets/wagon_logo.png";
+import LogoLogin from "../../../assets/login-2.webp";
 import { ENDPOINT, TOKEN, USER } from "../../../constants";
 import { AuthContext } from "../../../context/auth";
 import registerSchema from "../../../schema/register";
@@ -19,7 +19,7 @@ const RegisterPage = () => {
   const navigate = useNavigate();
   const { setIsAuthenticated, setUser } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
-  
+
   const [openPassword, setOpenPassword] = useState(false);
   const {
     register,
@@ -34,11 +34,12 @@ const RegisterPage = () => {
       console.log(data);
       Cookies.set(TOKEN, data.token);
       localStorage.setItem(USER, JSON.stringify(values));
+      toast.success(data.message);
       setIsAuthenticated(true);
       setUser(data);
-      navigate("/");
+      navigate("/login");
     } catch (err) {
-      toast.error("Error");
+      toast.error("Kiritilgan ma'lumotlaringizni tekshiring!");
     } finally {
       setLoading(false);
     }
@@ -46,14 +47,13 @@ const RegisterPage = () => {
 
   return (
     <Fragment>
-      <section id="register" className="flex items-center h-[100vh] w-full">
-        {/* Register image section */}
-        <div className="w-1/2 h-full hidden md:flex items-center bg-[#1D2D5B] justify-center flex-col relative">
-          <h1 className="text-white text-[32px]">Ro'yhatdan o'tish</h1>
-          <img className="w-64" src={LogoWagon} alt="Train" />
-        </div>
+      <section
+        style={{ backgroundImage: `url(${LogoLogin})` }}
+        id="register"
+        className="flex bg-no-repeat bg-cover justify-center items-center h-[100vh] w-full"
+      >
         {/* Register form section */}
-        <div className="md:w-1/2 w-full h-full flex items-center justify-center">
+        <div className="md:w-1/2 w-full backdrop-blur-[4px] sm:p-10 p-5 flex items-center justify-center">
           <div className="w-[330px] ">
             <h1 className="text-center text-[32px]">Hisob yaratish</h1>
             <form
@@ -199,15 +199,12 @@ const RegisterPage = () => {
                 to="/login"
                 className="text-[#1D2D5B] underline decoration-solid
                 transition-all duration-500
-                hover:text-red-600
+                hover:text-blue-700
                 "
               >
                 Tizimga kirish
               </Link>
             </div>
-          </div>
-          <div className="absolute bottom-2.5 text-[12px] text-center">
-            Copyright © 2024 of Oripov Fakhriddin
           </div>
         </div>
       </section>

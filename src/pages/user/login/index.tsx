@@ -3,12 +3,13 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-import LogoWagon from "../../../assets/wagon_logo.png";
+import LogoLogin from "../../../assets/login-2.webp";
 import { ENDPOINT, TOKEN, USER, USER_ID } from "../../../constants";
 import { AuthContext } from "../../../context/auth";
 import loginSchema from "../../../schema/login";
@@ -55,6 +56,10 @@ const LoginPage = () => {
       } else {
         navigate("/");
       }
+    } catch (err) {
+      if (err) {
+        toast.error("Bunday foydalanuvchi mavjud emas!");
+      }
     } finally {
       setLoading(false);
     }
@@ -62,16 +67,15 @@ const LoginPage = () => {
 
   return (
     <Fragment>
-      <section id="login" className="flex items-center h-[100vh] w-full">
-        {/* Login image section */}
-        <div className="w-1/2 h-full hidden md:flex items-center bg-[#1D2D5B] justify-center flex-col relative">
-          <h1 className="text-white text-[32px]">Hisobga kirish</h1>
-          <img className="w-64" src={LogoWagon} alt="Train" />
-        </div>
+      <section
+        style={{ backgroundImage: `url(${LogoLogin})` }}
+        id="login"
+        className="flex bg-no-repeat bg-cover items-center justify-center h-[100vh] w-full"
+      >
         {/* Login form section */}
-        <div className="md:w-1/2 w-full h-full flex items-center justify-center">
-          <div className="w-[330px] ">
-            <h1 className="text-center text-[32px]">Login</h1>
+        <div className="md:w-1/2 w-full backdrop-blur-[4px] sm:p-10 p-5 flex items-center rounded-2xl justify-center">
+          <div className="w-[330px] md:w-96 ">
+            <h1 className="text-center text-[32px]">Hisobga kirish</h1>
             <form
               autoComplete="off"
               onSubmit={handleSubmit(onSubmit)}
@@ -149,9 +153,9 @@ const LoginPage = () => {
               <p>Profilingiz yo'qmi?</p>
               <Link
                 to="/register"
-                className="text-[#1D2D5B] underline decoration-solid
+                className="text-[#1D2D5B] hover:text-blue-700 underline decoration-solid
                 transition-all duration-500
-                hover:text-red-600
+                
                 "
               >
                 Ro'yhatdan o'tish
@@ -160,17 +164,14 @@ const LoginPage = () => {
             <div className="flex mt-4 items-center justify-center gap-3">
               <Link
                 to="https://t.me/HK34_7"
-                className="text-[#1D2D5B] underline decoration-solid
+                className="text-[#1D2D5B] hover:text-blue-700 underline decoration-solid
                 transition-all duration-500
-                hover:text-red-600
+                
                 "
               >
                 Parolingizni unutdingizmi?
               </Link>
             </div>
-          </div>
-          <div className="absolute bottom-2.5 text-[12px] text-center">
-            Copyright © 2024 of Oripov Fakhriddin
           </div>
         </div>
       </section>

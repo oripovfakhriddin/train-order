@@ -6,6 +6,7 @@ import AdminLayout from "./components/layouts/admin";
 import UserLayout from "./components/layouts/user";
 import { AuthContext } from "./context/auth";
 import AdminAccountsPage from "./pages/admin/accounts";
+import AdminCanceledOrdersPage from "./pages/admin/canceled-orders";
 import DashboardPage from "./pages/admin/dashboard";
 import AdminOrdersPage from "./pages/admin/orders";
 import AdminUsersPage from "./pages/admin/users";
@@ -13,6 +14,7 @@ import AdminWagonsPage from "./pages/admin/wagons";
 import AccountPage from "./pages/user/account";
 import HomePage from "./pages/user/home";
 import LoginPage from "./pages/user/login";
+import AddNewAdmin from "./pages/user/new-admin";
 import UserOrderPage from "./pages/user/order";
 import RegisterPage from "./pages/user/register";
 import MySingleOrderPage from "./pages/user/single-order";
@@ -36,6 +38,13 @@ const App = () => {
               path="/order"
               element={
                 isAuthenticated ? <UserOrderPage /> : <Navigate to={"/login"} />
+              }
+            />
+
+            <Route
+              path="/add-new-admin"
+              element={
+                isAuthenticated ? <AddNewAdmin /> : <Navigate to={"/login"} />
               }
             />
             <Route
@@ -72,6 +81,10 @@ const App = () => {
             <Route path="users" element={<AdminUsersPage />} />
             <Route path="wagons" element={<AdminWagonsPage />} />
             <Route path="orders" element={<AdminOrdersPage />} />
+            <Route
+              path="canceled-orders"
+              element={<AdminCanceledOrdersPage />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -200,7 +200,7 @@ const UserWagonPage = () => {
                   {wagons.map((wagon, index) => (
                     <tr
                       key={index}
-                      className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
+                      className="odd:bg-white odd:dark:bg-gray-900 hover:bg-gray-300 transition-all even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
                     >
                       <th className="px-2 py-1 md:px-4 md:py-3 text-center">
                         {index + 1}.
@@ -225,12 +225,6 @@ const UserWagonPage = () => {
                         {wagon.description.slice(0, 30)}
                       </th>
                       <td className="px-2 py-1 md:px-4 md:py-3 text-end flex items-center gap-2 justify-end">
-                        <button
-                          type="submit"
-                          className="text-white w-28 text-center justify-center inline-flex items-center bg-orange-400 hover:bg-orange-600 focus:ring-4 focus:outline-none focus:ring-orange-200 font-medium rounded-lg text-sm px-5 py-2.5  dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800"
-                        >
-                          Ma'lumot
-                        </button>
                         <button
                           type="submit"
                           onClick={() => {
@@ -337,7 +331,9 @@ const UserWagonPage = () => {
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   >
                     {TRAIN_STATION.map((station, index) => (
-                      <option key={index} value={station}>{station}</option>
+                      <option key={index} value={station}>
+                        {station}
+                      </option>
                     ))}
                   </select>
                   {errors?.fromWhere && (
@@ -358,7 +354,9 @@ const UserWagonPage = () => {
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   >
                     {TRAIN_STATION.map((station, index) => (
-                      <option key={index} value={station}>{station}</option>
+                      <option key={index} value={station}>
+                        {station}
+                      </option>
                     ))}
                   </select>
                   {errors?.toWhere && (

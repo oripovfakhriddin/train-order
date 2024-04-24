@@ -30,11 +30,20 @@ const UserOrderPage = () => {
                 Jami: {total}
               </h4>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-              {usersOrders.map((order, index) => (
-                <UserOrdersCard key={index} {...order} index={index} />
-              ))}
-            </div>
+
+            {total !== 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-7">
+                {usersOrders.map((order, index) => (
+                  <UserOrdersCard key={index} {...order} index={index} />
+                ))}
+              </div>
+            ) : (
+              <div>
+                <h1 className="text-red-500 text-center text-xl my-10 sm:text-4xl">
+                  Sizda buyurtmalar mavjud emas!
+                </h1>
+              </div>
+            )}
           </div>
         </section>
       )}
