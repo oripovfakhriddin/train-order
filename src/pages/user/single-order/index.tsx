@@ -252,7 +252,7 @@ const MySingleOrderPage = () => {
                 <hr />
                 <div className="flex items-center justify-between gap-3 mb-2">
                   <p>Narxi: </p>
-                  <p>{orderData?.price} $</p>
+                  <p>{orderData?.price} so'm</p>
                 </div>
                 <hr />
                 <div className="flex items-center flex-col sm:flex-row justify-between gap-3 mt-6">

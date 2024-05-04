@@ -269,7 +269,7 @@ const AdminOrdersPage = () => {
                       scope="row"
                       className="px-2 py-2 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white"
                     >
-                      {order.price}
+                      {order.price} so'm
                     </th>
                     <td className="px-6 py-2 text-end flex items-center justify-end">
                       {order?.cancel ? (

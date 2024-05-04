@@ -130,7 +130,7 @@ const AdminCanceledOrdersPage = () => {
                       scope="row"
                       className="px-2 py-2 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white"
                     >
-                      {order.price}
+                      {order.price} so'm
                     </th>
                     <td className="px-2 py-2 text-center">
                       {order?.cancel ? (

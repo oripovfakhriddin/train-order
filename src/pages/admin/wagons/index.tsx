@@ -219,7 +219,7 @@ const AdminWagonsPage = () => {
                     </td>
                     <td className="px-2 py-1 md:px-4 md:py-3">{wagon.type}</td>
                     <td className="px-2 py-1 md:px-4 md:py-3 text-center">
-                      {wagon.price}
+                      {wagon.price} so'm
                     </td>
                     <td className="px-2 py-1 md:px-4 md:py-3 text-center">
                       <p content={wagon.description}>

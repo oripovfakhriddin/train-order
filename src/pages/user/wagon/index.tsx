@@ -226,7 +226,7 @@ const UserWagonPage = () => {
                         {wagon.type}
                       </td>
                       <th className="px-2 py-1 md:px-4 md:py-3 text-center">
-                        {wagon.price}
+                        {wagon.price} so'm
                       </th>
                       <th className="px-2 py-1 md:px-4 md:py-3 text-center">
                         {wagon.description.slice(0, 30)}

@@ -55,7 +55,7 @@ const UserOrdersCard = ({
         </div>
         <div className="flex items-center justify-between gap-3 mb-2">
           <p>Narxi: </p>
-          <p>{price} $</p>
+          <p>{price} so'm</p>
         </div>
         <NavLink
           to={"/my-single-order"}
