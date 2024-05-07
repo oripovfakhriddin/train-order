@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 import Slider from "react-slick";
 
 import CarouselImage_1 from "../../../assets/home-1.jpg";
@@ -42,7 +43,7 @@ const HomePage = () => {
           <Slider {...settings}>
             <div className="h-96 sm:h-[600px]  ">
               <div className="h-full px-1 sm:px-10">
-                <img
+                <LazyLoadImage
                   className="object-cover w-full h-full rounded-3xl "
                   src={CarouselImage_1}
                   alt="Carousel images"
@@ -51,7 +52,7 @@ const HomePage = () => {
             </div>
             <div className="h-96 sm:h-[600px]  ">
               <div className="h-full px-1 sm:px-10">
-                <img
+                <LazyLoadImage
                   className="object-cover w-full h-full rounded-3xl "
                   src={CarouselImage_2}
                   alt="Carousel images"
@@ -60,7 +61,7 @@ const HomePage = () => {
             </div>
             <div className="h-96 sm:h-[600px]  ">
               <div className="h-full px-1 sm:px-10">
-                <img
+                <LazyLoadImage
                   className="object-cover w-full h-full rounded-3xl "
                   src={CarouselImage_3}
                   alt="Carousel images"
@@ -69,7 +70,7 @@ const HomePage = () => {
             </div>
             <div className="h-96 sm:h-[600px]  ">
               <div className="h-full px-1 sm:px-10">
-                <img
+                <LazyLoadImage
                   className="object-cover w-full h-full rounded-3xl "
                   src={CarouselImage_4}
                   alt="Carousel images"
@@ -78,7 +79,7 @@ const HomePage = () => {
             </div>
             <div className="h-96 sm:h-[600px]  ">
               <div className="h-full px-1 sm:px-10">
-                <img
+                <LazyLoadImage
                   className="object-cover w-full h-full rounded-3xl "
                   src={CarouselImage_5}
                   alt="Carousel images"
@@ -87,7 +88,7 @@ const HomePage = () => {
             </div>
             <div className="h-96 sm:h-[600px]  ">
               <div className="h-full px-1 sm:px-10">
-                <img
+                <LazyLoadImage
                   className="object-cover w-full h-full rounded-3xl "
                   src={CarouselImage_6}
                   alt="Carousel images"
@@ -96,7 +97,7 @@ const HomePage = () => {
             </div>
             <div className="h-96 sm:h-[600px]  ">
               <div className="h-full px-1 sm:px-10">
-                <img
+                <LazyLoadImage
                   className="object-cover w-full h-full rounded-3xl "
                   src={CarouselImage_7}
                   alt="Carousel images"
@@ -105,7 +106,7 @@ const HomePage = () => {
             </div>
             <div className="h-96 sm:h-[600px]  ">
               <div className="h-full px-1 sm:px-10">
-                <img
+                <LazyLoadImage
                   className="object-cover w-full h-full rounded-3xl "
                   src={CarouselImage_8}
                   alt="Carousel images"
@@ -114,7 +115,7 @@ const HomePage = () => {
             </div>
             <div className="h-96 sm:h-[600px]  ">
               <div className="h-full px-1 sm:px-10">
-                <img
+                <LazyLoadImage
                   className="object-cover w-full h-full rounded-3xl "
                   src={CarouselImage_9}
                   alt="Carousel images"
@@ -123,7 +124,7 @@ const HomePage = () => {
             </div>
             <div className="h-96 sm:h-[600px]  ">
               <div className="h-full px-1 sm:px-10">
-                <img
+                <LazyLoadImage
                   className="object-cover w-full h-full rounded-3xl "
                   src={CarouselImage_10}
                   alt="Carousel images"
@@ -155,7 +156,7 @@ const HomePage = () => {
               rusumli sisterna vagonlar va boshqalar.
             </p>
             <div className="mt-4 sm:mt-0 rounded-lg overflow-hidden">
-              <img src={CarouselImage_2} alt="Images" />
+              <LazyLoadImage src={CarouselImage_2} alt="Images" />
             </div>
           </div>
         </div>
@@ -166,7 +167,7 @@ const HomePage = () => {
           </h1>
           <div className=" md:grid md:grid-cols-2 md:gap-5 sm:px-10 justify-between items-center">
             <div className="mb-4 sm:mb-0 rounded-lg overflow-hidden">
-              <img src={CarouselImage_11} alt="Images" />
+              <LazyLoadImage src={CarouselImage_11} alt="Images" />
             </div>
             <p>
               “O‘zbekiston temir yo‘llari” aksiyadorlik jamiyati tarkibidagi
