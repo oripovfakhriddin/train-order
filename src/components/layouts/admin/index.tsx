@@ -5,6 +5,7 @@ import { BiSolidUserDetail } from "react-icons/bi";
 import { BiTrain } from "react-icons/bi";
 import { FaRegUserCircle } from "react-icons/fa";
 import { FaTableList } from "react-icons/fa6";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 
 import Cookies from "js-cookie";
@@ -76,7 +77,7 @@ const AdminLayout = () => {
             open ? "w-72" : "w-20 "
           } bg-dark-purple p-5 fixed h-full pt-8 duration-300`}
         >
-          <img
+          <LazyLoadImage
             src={Control}
             className={`absolute cursor-pointer -right-3 ${
               open ? "top-9" : "top-11"
@@ -85,7 +86,7 @@ const AdminLayout = () => {
             onClick={() => setOpen(!open)}
           />
           <div className="flex gap-x-4 items-center">
-            <img
+            <LazyLoadImage
               src={Logo}
               className={`cursor-pointer duration-500 ${
                 open && "rotate-[360deg]"
