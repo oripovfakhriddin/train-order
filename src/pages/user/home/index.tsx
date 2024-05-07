@@ -156,7 +156,7 @@ const HomePage = () => {
               rusumli sisterna vagonlar va boshqalar.
             </p>
             <div className="mt-4 sm:mt-0 rounded-lg overflow-hidden">
-              <LazyLoadImage src={CarouselImage_2} alt="Images" />
+              <LazyLoadImage effect="blur" src={CarouselImage_2} alt="Images" />
             </div>
           </div>
         </div>
@@ -167,7 +167,11 @@ const HomePage = () => {
           </h1>
           <div className=" md:grid md:grid-cols-2 md:gap-5 sm:px-10 justify-between items-center">
             <div className="mb-4 sm:mb-0 rounded-lg overflow-hidden">
-              <LazyLoadImage src={CarouselImage_11} alt="Images" />
+              <LazyLoadImage
+                effect="blur"
+                src={CarouselImage_11}
+                alt="Images"
+              />
             </div>
             <p>
               “O‘zbekiston temir yo‘llari” aksiyadorlik jamiyati tarkibidagi

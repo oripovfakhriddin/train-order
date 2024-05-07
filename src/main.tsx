@@ -6,6 +6,7 @@ import App from "./App.tsx";
 import AuthContextProvider from "./context/auth.tsx";
 import StoreProvider from "./redux/store/index.tsx";
 
+import "react-lazy-load-image-component/src/effects/blur.css";
 import "react-toastify/dist/ReactToastify.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
