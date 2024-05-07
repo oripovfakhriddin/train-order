@@ -61,7 +61,11 @@ const Header = () => {
             onClick={() => setOpen(!open)}
             className="text-3xl absolute right-[10px] top-6 cursor-pointer md:hidden"
           >
-            {open ? <X /> : <Menu />}
+            {open ? (
+              <X className="text-white" />
+            ) : (
+              <Menu className="text-white" />
+            )}
           </div>
 
           <ul
@@ -74,7 +78,7 @@ const Header = () => {
                 <NavLink
                   to={link.link}
                   onClick={() => setOpen(false)}
-                  className={` hover:text-gray-100 ${
+                  className={` hover:text-gray-100 w-full flex  ${
                     location.pathname === link.link
                       ? "text-gray-100"
                       : "text-gray-400"
