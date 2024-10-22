@@ -156,7 +156,7 @@ const AdminAccountsPage = () => {
                       Raqami:
                     </span>
                     <p className="px-4 border-2 py-[6px] border-l-0 cursor-default border-gray-300 focus:outline-none  rounded-md rounded-l-none shadow-sm -ml-1 w-4/6">
-                      {userData?.number}
+                      {userData?.number.slice(0, 7)}...
                     </p>
                   </div>
                   <div className="flex item items-center">
@@ -172,7 +172,7 @@ const AdminAccountsPage = () => {
                       Email:
                     </span>
                     <p className="px-4 border-2 py-[6px] border-l-0 cursor-default border-gray-300 focus:outline-none  rounded-md rounded-l-none shadow-sm -ml-1 w-4/6">
-                      {userData?.email}
+                      {userData?.email.slice(0, 7)}...
                     </p>
                   </div>
                   <div className="flex item items-center">

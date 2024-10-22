@@ -52,7 +52,7 @@ const DashboardPage = () => {
                 Foydalanuvchilar
               </h5>
               <span className="text-sm text-gray-500 dark:text-gray-400">
-                Jami: {usersTotal}
+                Jami: {usersTotal} ta
               </span>
               <div className="flex mt-4 md:mt-6">
                 <Link
@@ -71,7 +71,7 @@ const DashboardPage = () => {
                 Buyurtmalar
               </h5>
               <span className="text-sm text-gray-500 dark:text-gray-400">
-                Jami: {allUsersOrdersTotal}
+                Jami: {allUsersOrdersTotal} ta
               </span>
               <div className="flex mt-4 md:mt-6">
                 <Link
@@ -90,7 +90,7 @@ const DashboardPage = () => {
                 Vagonlar
               </h5>
               <span className="text-sm text-gray-500 dark:text-gray-400">
-                Jami: {wagonsTotal}
+                Jami: {wagonsTotal} ta
               </span>
               <div className="flex mt-4 md:mt-6">
                 <Link
@@ -105,11 +105,11 @@ const DashboardPage = () => {
           <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <div className="flex flex-col items-center py-4">
               <FaTableList className="w-32 h-32 text-red-500" />
-              <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">
+              <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white text-center">
                 Bekor qilingan buyurtmalar
               </h5>
               <span className="text-sm text-gray-500 dark:text-gray-400">
-                Jami: {cancelOrdersTotal}
+                Jami: {cancelOrdersTotal} ta
               </span>
               <div className="flex mt-4 md:mt-6">
                 <Link

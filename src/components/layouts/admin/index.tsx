@@ -142,7 +142,7 @@ const AdminLayout = () => {
         <div
           className={` ${
             open ? "ml-[288px]" : "ml-[80px]"
-          } h-screen  flex-1 p-3`}
+          } h-screen  flex-1 p-3 -z-10`}
         >
           <Outlet />
         </div>
